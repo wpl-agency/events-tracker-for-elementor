@@ -298,6 +298,21 @@ class Main {
 				'render_type' => 'none',
 			)
 		);
+
+		$element->add_control(
+			'wpl_elementor_events_tracker_analytics_note',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'show_label'      => false,
+				'raw'             => esc_html__( 'Tracking events with old Google Analytics code (analytics.js)', 'wpl-elementor-events-tracker' ),
+				'condition'       => array(
+					'wpl_elementor_events_tracker_analytics' => 'yes',
+				),
+				'render_type'     => 'none',
+				'content_classes' => 'elementor-descriptor',
+			)
+		);
+
 		$element->add_control(
 			'wpl_elementor_events_tracker_analytics_category',
 			array(
@@ -311,6 +326,7 @@ class Main {
 				'render_type' => 'none',
 			)
 		);
+
 		$element->add_control(
 			'wpl_elementor_events_tracker_analytics_action',
 			array(
@@ -324,6 +340,7 @@ class Main {
 				'render_type' => 'none',
 			)
 		);
+
 		$element->add_control(
 			'wpl_elementor_events_tracker_analytics_label',
 			array(
@@ -337,6 +354,7 @@ class Main {
 				'render_type' => 'none',
 			)
 		);
+
 		$element->add_control(
 			'wpl_elementor_events_tracker_gtag',
 			array(
@@ -345,6 +363,21 @@ class Main {
 				'render_type' => 'none',
 			)
 		);
+
+		$element->add_control(
+			'wpl_elementor_events_tracker_gtag_note',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'show_label'      => false,
+				'raw'             => esc_html__( 'Tracking events with new Google Analytics code (gtag.js)', 'wpl-elementor-events-tracker' ),
+				'condition'       => array(
+					'wpl_elementor_events_tracker_gtag' => 'yes',
+				),
+				'render_type'     => 'none',
+				'content_classes' => 'elementor-descriptor',
+			)
+		);
+
 		$element->add_control(
 			'wpl_elementor_events_tracker_gtag_category',
 			array(
@@ -358,6 +391,7 @@ class Main {
 				'render_type' => 'none',
 			)
 		);
+
 		$element->add_control(
 			'wpl_elementor_events_tracker_gtag_action',
 			array(
@@ -371,6 +405,7 @@ class Main {
 				'render_type' => 'none',
 			)
 		);
+
 		$element->add_control(
 			'wpl_elementor_events_tracker_gtag_label',
 			array(
@@ -384,27 +419,29 @@ class Main {
 				'render_type' => 'none',
 			)
 		);
-		/*$element->add_control(
-			'wpl_elementor_events_tracker_aw',
+
+		$element->add_control(
+			'wpl_elementor_events_tracker_adwords',
 			array(
 				'label'       => esc_html__( 'Track Adwords Converstion (gtag.js)', 'wpl-elementor-events-tracker' ),
 				'type'        => Controls_Manager::SWITCHER,
 				'render_type' => 'none',
 			)
 		);
+
 		$element->add_control(
-			'wpl_elementor_events_tracker_aw_conversion',
+			'wpl_elementor_events_tracker_adwords_conversion',
 			array(
 				'label'       => esc_html__( 'Conversion', 'wpl-elementor-events-tracker' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'i.e AW-XXXXXXXX/XXXXXXXXX', 'wpl-elementor-events-tracker' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_aw' => 'yes',
+					'wpl_elementor_events_tracker_adwords' => 'yes',
 				),
 				'render_type' => 'none',
 			)
-		);*/
+		);
 
 		$element->add_control(
 			'wpl_elementor_events_tracker_vkontakte',
@@ -510,6 +547,13 @@ class Main {
 				$attr['gtag_category'] = $settings['wpl_elementor_events_tracker_gtag_category'];
 				$attr['gtag_action']   = $settings['wpl_elementor_events_tracker_gtag_action'];
 				$attr['gtag_label']    = $settings['wpl_elementor_events_tracker_gtag_label'];
+			}
+
+			// Google Adwords Conversion (gtag).
+			if ( isset( $settings['wpl_elementor_events_tracker_adwords'] ) ) {
+				$has_tracking               = true;
+				$attr['adwords']            = true;
+				$attr['adwords_conversion'] = $settings['wpl_elementor_events_tracker_adwords_conversion'];
 			}
 
 			if ( $has_tracking ) {

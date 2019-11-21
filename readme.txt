@@ -102,6 +102,7 @@ You're welcome to create new issue in our support forum and say something about 
 * Fixed bugs
 * Added images & headings to tracking
 * Added new fields to gtag: action, category, label
+* Added Adwords conversion tracking
 
 = 1.0 (21.11.2019) =
 * Plugin init
