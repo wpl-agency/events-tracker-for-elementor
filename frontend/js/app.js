@@ -59,7 +59,7 @@
 					}
 
 					if ( options.gtag ) {
-						track_gtag( options.gtag_event_name );
+						track_gtag( options.gtag_category, options.gtag_action, options.gtag_label );
 					}
 
 					if ( options.analytics ) {
@@ -91,9 +91,16 @@
 					}
 				}
 
-				function track_gtag( event_name ) {
+				function track_gtag( category, action, label ) {
 					if ( window.gtag && typeof ( gtag ) === 'function' ) {
-						gtag( 'event', event_name );
+						gtag(
+							'event',
+							action,
+							{
+								'event_category' : category,
+								'event_label' : label
+							}
+						);
 					} else {
 						window.console.log( 'Global Google Tag (gtag.js) not loaded' );
 					}

@@ -346,12 +346,38 @@ class Main {
 			)
 		);
 		$element->add_control(
-			'wpl_elementor_events_tracker_gtag_event_name',
+			'wpl_elementor_events_tracker_gtag_category',
 			array(
-				'label'       => esc_html__( 'Event Name', 'wpl-elementor-events-tracker' ),
+				'label'       => esc_html__( 'Event Category', 'wpl-elementor-events-tracker' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
-				'placeholder' => esc_html__( 'i.e Lead', 'wpl-elementor-events-tracker' ),
+				'placeholder' => esc_html__( 'i.e Outbound Link', 'wpl-elementor-events-tracker' ),
+				'condition'   => array(
+					'wpl_elementor_events_tracker_gtag' => 'yes',
+				),
+				'render_type' => 'none',
+			)
+		);
+		$element->add_control(
+			'wpl_elementor_events_tracker_gtag_action',
+			array(
+				'label'       => esc_html__( 'Event Action', 'wpl-elementor-events-tracker' ),
+				'type'        => Controls_Manager::TEXT,
+				'show_label'  => true,
+				'placeholder' => esc_html__( 'i.e click', 'wpl-elementor-events-tracker' ),
+				'condition'   => array(
+					'wpl_elementor_events_tracker_gtag' => 'yes',
+				),
+				'render_type' => 'none',
+			)
+		);
+		$element->add_control(
+			'wpl_elementor_events_tracker_gtag_label',
+			array(
+				'label'       => esc_html__( 'Event Label', 'wpl-elementor-events-tracker' ),
+				'type'        => Controls_Manager::TEXT,
+				'show_label'  => true,
+				'placeholder' => esc_html__( 'i.e Fall Campaign', 'wpl-elementor-events-tracker' ),
 				'condition'   => array(
 					'wpl_elementor_events_tracker_gtag' => 'yes',
 				),
@@ -479,9 +505,11 @@ class Main {
 
 			// Google Global Tag (gtag).
 			if ( isset( $settings['wpl_elementor_events_tracker_gtag'] ) ) {
-				$has_tracking            = true;
-				$attr['gtag']            = true;
-				$attr['gtag_event_name'] = $settings['wpl_elementor_events_tracker_gtag_event_name'];
+				$has_tracking          = true;
+				$attr['gtag']          = true;
+				$attr['gtag_category'] = $settings['wpl_elementor_events_tracker_gtag_category'];
+				$attr['gtag_action']   = $settings['wpl_elementor_events_tracker_gtag_action'];
+				$attr['gtag_label']    = $settings['wpl_elementor_events_tracker_gtag_label'];
 			}
 
 			if ( $has_tracking ) {

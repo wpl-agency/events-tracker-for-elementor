@@ -101,6 +101,7 @@ You're welcome to create new issue in our support forum and say something about 
 = 1.1 (22.11.2019) =
 * Fixed bugs
 * Added images & headings to tracking
+* Added new fields to gtag: action, category, label
 
 = 1.0 (21.11.2019) =
 * Plugin init
