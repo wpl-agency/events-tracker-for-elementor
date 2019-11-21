@@ -62,6 +62,10 @@
 						track_gtag( options.gtag_category, options.gtag_action, options.gtag_label );
 					}
 
+					if ( options.adwords ) {
+						track_adwords( options.adwords_conversion );
+					}
+
 					if ( options.analytics ) {
 						track_analytics( options.analytics_category, options.analytics_action, options.analytics_label );
 					}
@@ -101,6 +105,14 @@
 								'event_label' : label
 							}
 						);
+					} else {
+						window.console.log( 'Global Google Tag (gtag.js) not loaded' );
+					}
+				}
+
+				function track_adwords( conversion ) {
+					if ( window.gtag && typeof ( gtag ) === 'function' ) {
+						gtag( 'config', conversion );
 					} else {
 						window.console.log( 'Global Google Tag (gtag.js) not loaded' );
 					}
