@@ -4,15 +4,48 @@
 
 		$(
 			function ( $ ) {
+
 				$( document ).on(
-					// Click - for buttons, submit_success - for forms.
-					'click submit_success',
-					'[data-wpl_tracker]',
-					function ( e ) {
-						var $element = $( this ),
-							options  = $element.data( 'wpl_tracker' );
+					// Buttons, headings, images.
+					'click',
+					'[data-wpl_tracker] a',
+					function ( event ) {
+						var $link    = $( this ),
+							href     = $link.attr( 'href' ),
+							lightbox = $link.data( 'elementor-open-lightbox' ),
+							options  = $link.parents( '.wpl-elementor-events-tracker' ).data( 'wpl_tracker' );
+
+						// Отменим переход по ссылке.
+						event.preventDefault();
+
+						// Если есть ссылка для перехода, добавим задержку,
+						// чтобы трекинги успели отработать.
+						if ( href && '#' !== href && ( ! lightbox || 'no' === lightbox ) ) {
+							track_element( options );
+							console.log( 'Click with link' );
+							setTimeout(
+								function () {
+									document.location.href = href;
+								},
+								2000
+							);
+						} else {
+							track_element( options );
+							console.log( 'Click without link' );
+						}
+					}
+				);
+
+				$( document ).on(
+					// Forms.
+					'submit_success',
+					'[data-wpl_tracker] form',
+					function ( event ) {
+						var $form   = $( this ),
+							options = $form.parents( '.wpl-elementor-events-tracker' ).data( 'wpl_tracker' );
 
 						track_element( options );
+						console.log( 'Submit success' );
 					}
 				);
 

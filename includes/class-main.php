@@ -10,6 +10,11 @@ use Elementor\Settings;
 use Elementor\Widget_Base;
 
 class Main {
+	/**
+	 * @var array $allowed_widget Array of allowed widgets to tracking.
+	 */
+	private $allowed_widget = array( 'button', 'form', 'heading', 'image' );
+
 	public function __construct() {
 		$this->hooks();
 	}
@@ -20,6 +25,8 @@ class Main {
 	public function hooks() {
 		add_action( 'elementor/element/button/section_button/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/form/section_form_fields/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+		add_action( 'elementor/element/heading/section_title/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+		add_action( 'elementor/element/image/section_image/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ) );
 		add_action( 'elementor/frontend/before_enqueue_scripts', array( $this, 'enqueue_scripts' ), 9 );
 		add_action( 'elementor/admin/after_create_settings/elementor', [ $this, 'register_settings' ] );
@@ -427,13 +434,13 @@ class Main {
 	 */
 	public function before_render( $element ) {
 
-		if ( in_array( $element->get_name(), array( 'button', 'form' ) ) ) {
+		if ( in_array( $element->get_name(), $this->allowed_widget ) ) {
 
 			$data = $element->get_data();
 
 			$settings     = $data['settings'];
 			$attr         = array();
-			$has_tracking = true;
+			$has_tracking = false;
 
 			// Vkontakte.
 			if ( isset( $settings['wpl_elementor_events_tracker_vkontakte'] ) ) {
@@ -479,9 +486,10 @@ class Main {
 
 			if ( $has_tracking ) {
 				$element->add_render_attribute(
-					$element->get_name(),
+					'_wrapper',
 					array(
 						'data-wpl_tracker' => json_encode( $attr ),
+						'class'            => 'wpl-elementor-events-tracker',
 					)
 				);
 			}

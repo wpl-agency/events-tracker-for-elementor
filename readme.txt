@@ -5,7 +5,7 @@ Donate link: https://www.kobzarev.com/donate/
 Requires at least: 5.0
 Tested up to: 5.3
 Requires PHP: 5.6.20
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,5 +97,10 @@ No. You can use any tracking or pixel code insertion method. Nevermind yours or 
 You're welcome to create new issue in our support forum and say something about your idea
 
 == Changelog ==
+
+= 1.1 (22.11.2019) =
+* Fixed bugs
+* Added images & headings to tracking
+
 = 1.0 (21.11.2019) =
 * Plugin init
