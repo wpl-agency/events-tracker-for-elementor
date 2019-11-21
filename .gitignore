@@ -7,7 +7,6 @@ wp-content/blogs.dir/
 wp-content/cache/
 wp-content/upgrade/
 wp-content/uploads/
-wp-content/mu-plugins/
 wp-content/wp-cache-config.php
 wp-content/plugins/hello.php
 
@@ -17,3 +16,5 @@ wp-content/plugins/hello.php
 /sitemap.xml
 /sitemap.xml.gz
 
+.idea/
+/vendor/
