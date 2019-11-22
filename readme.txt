@@ -1,4 +1,4 @@
-=== Events Tracker for Elementor. Google Analytics, GTM, Facebook, Yandex Metrika, Vkontakte ===
+=== Events Tracker for Elementor ===
 Contributors: wplagency, mihdan, donatory
 Tags: elementor, seo, links, vlontakte, metrika, gtag, analytics, tracker, events
 Donate link: https://www.kobzarev.com/donate/
