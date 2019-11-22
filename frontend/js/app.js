@@ -63,7 +63,7 @@
 					}
 
 					if ( options.adwords ) {
-						track_adwords( options.adwords_conversion );
+						track_adwords( options.adwords_id, options.adwords_label, options.adwords_currency, options.adwords_value );
 					}
 
 					if ( options.analytics ) {
@@ -110,9 +110,17 @@
 					}
 				}
 
-				function track_adwords( conversion ) {
+				function track_adwords( id, label, currency, value ) {
 					if ( window.gtag && typeof ( gtag ) === 'function' ) {
-						gtag( 'config', conversion );
+						gtag(
+							'event',
+							'conversion',
+							{
+								'send_to': id + '/' + label,
+								'value': value,
+								'currency': currency
+							}
+						);
 					} else {
 						window.console.log( 'Global Google Tag (gtag.js) not loaded' );
 					}

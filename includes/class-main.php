@@ -53,6 +53,7 @@ class Main {
 		$yandex_metrika_id  = $this->get_option( 'yandex_metrika_id' );
 		$facebook_pixel_id  = $this->get_option( 'facebook_pixel_id' );
 		$gtag_id            = $this->get_option( 'gtag_id' );
+		$adwords_id         = $this->get_option( 'adwords_id' );
 		$analytics_id       = $this->get_option( 'analytics_id' );
 
 		if ( $vkontakte_pixel_id ) {
@@ -117,7 +118,7 @@ class Main {
 			<?php
 		}
 
-		if ( $gtag_id ) {
+		if ( $gtag_id || $adwords_id ) {
 			?>
 			<!-- Global site tag (gtag.js) - Google Analytics -->
 			<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $gtag_id ); ?>"></script>
@@ -188,6 +189,13 @@ class Main {
 					],
 					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_gtag_id' => [
 						'label'      => __( 'Global Site Tag ID (gtag.js)', 'wpl-elementor-events-tracker' ),
+						'field_args' => [
+							'type' => 'text',
+							'desc' => 'description',
+						],
+					],
+					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_adwords_id' => [
+						'label'      => __( 'Adwords Converion ID (gtag.js)', 'wpl-elementor-events-tracker' ),
 						'field_args' => [
 							'type' => 'text',
 							'desc' => 'description',
@@ -423,19 +431,59 @@ class Main {
 		$element->add_control(
 			'wpl_elementor_events_tracker_adwords',
 			array(
-				'label'       => esc_html__( 'Track Adwords Converstion (gtag.js)', 'wpl-elementor-events-tracker' ),
+				'label'       => esc_html__( 'Track Adwords Conversion (gtag.js)', 'wpl-elementor-events-tracker' ),
 				'type'        => Controls_Manager::SWITCHER,
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_adwords_conversion',
+			'wpl_elementor_events_tracker_adwords_label',
 			array(
-				'label'       => esc_html__( 'Conversion', 'wpl-elementor-events-tracker' ),
+				'label'       => esc_html__( 'Event Label', 'wpl-elementor-events-tracker' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
-				'placeholder' => esc_html__( 'i.e AW-XXXXXXXX/XXXXXXXXX', 'wpl-elementor-events-tracker' ),
+				'placeholder' => esc_html__( 'bC-D_efG-h12_34-567', 'wpl-elementor-events-tracker' ),
+				'condition'   => array(
+					'wpl_elementor_events_tracker_adwords' => 'yes',
+				),
+				'render_type' => 'none',
+			)
+		);
+
+		/**
+		 * @link https://support.google.com/analytics/answer/6205902
+		 */
+		$element->add_control(
+			'wpl_elementor_events_tracker_adwords_currency',
+			array(
+				'label'       => esc_html__( 'Event Currency', 'wpl-elementor-events-tracker' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => [
+					'USD' => esc_html__( 'Доллар США', 'wpl-elementor-events-tracker' ),
+					'CNY' => esc_html__( 'Юань', 'wpl-elementor-events-tracker' ),
+					'EUR' => esc_html__( 'Евро', 'wpl-elementor-events-tracker' ),
+					'IDR' => esc_html__( 'Индонезийская рупия', 'wpl-elementor-events-tracker' ),
+					'ILS' => esc_html__( 'Израильский шекель', 'wpl-elementor-events-tracker' ),
+					'RUB' => esc_html__( 'Российский рубль', 'wpl-elementor-events-tracker' ),
+				],
+				'default'     => 'RUB',
+				'show_label'  => true,
+				'condition'   => array(
+					'wpl_elementor_events_tracker_adwords' => 'yes',
+				),
+				'render_type' => 'none',
+			)
+		);
+
+		$element->add_control(
+			'wpl_elementor_events_tracker_adwords_value',
+			array(
+				'label'       => esc_html__( 'Event Value', 'wpl-elementor-events-tracker' ),
+				'type'        => Controls_Manager::NUMBER,
+				'show_label'  => true,
+				'placeholder' => esc_html__( 'i.e 100', 'wpl-elementor-events-tracker' ),
+				'default'     => 0,
 				'condition'   => array(
 					'wpl_elementor_events_tracker_adwords' => 'yes',
 				),
@@ -551,9 +599,12 @@ class Main {
 
 			// Google Adwords Conversion (gtag).
 			if ( isset( $settings['wpl_elementor_events_tracker_adwords'] ) ) {
-				$has_tracking               = true;
-				$attr['adwords']            = true;
-				$attr['adwords_conversion'] = $settings['wpl_elementor_events_tracker_adwords_conversion'];
+				$has_tracking             = true;
+				$attr['adwords']          = true;
+				$attr['adwords_label']    = $settings['wpl_elementor_events_tracker_adwords_label'];
+				$attr['adwords_currency'] = $settings['wpl_elementor_events_tracker_adwords_currency'];
+				$attr['adwords_value']    = $settings['wpl_elementor_events_tracker_adwords_value'];
+				$attr['adwords_id']       = $this->get_option( 'adwords_id' );
 			}
 
 			if ( $has_tracking ) {

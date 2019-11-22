@@ -1,5 +1,5 @@
 === Events Tracker for Elementor. Google Analytics, GTM, Facebook, Yandex Metrika, Vkontakte ===
-Contributors: mihdan, donatory
+Contributors: wplagency, mihdan, donatory
 Tags: elementor, seo, links, vlontakte, metrika, gtag, analytics, tracker, events
 Donate link: https://www.kobzarev.com/donate/
 Requires at least: 5.0
