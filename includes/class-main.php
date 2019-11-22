@@ -166,27 +166,6 @@ class Main {
 					echo $message;
 				},
 				'fields'   => [
-					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_vkontakte_pixel_id' => [
-						'label'      => __( 'Vkontakte Pixel ID', 'wpl-elementor-events-tracker' ),
-						'field_args' => [
-							'type' => 'text',
-							'desc' => __( 'See <a href="https://vk.com/faq12142" target="_blank">VK FAQ</a> to create pixel and get code' ),
-						],
-					],
-					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_yandex_metrika_id' => [
-						'label'      => __( 'Yandex Metrika ID', 'wpl-elementor-events-tracker' ),
-						'field_args' => [
-							'type' => 'text',
-							'desc' => __( 'See Yandex Metrika <a href="https://yandex.ru/support/metrica/quick-start.html?lang=en" target="_blank">Quick Start Guide</a>' ),
-						],
-					],
-					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_facebook_pixel_id' => [
-						'label'      => __( 'Facebook Pixel ID', 'wpl-elementor-events-tracker' ),
-						'field_args' => [
-							'type' => 'text',
-							'desc' => __( 'Know how to create a <a href="https://www.facebook.com/business/help/952192354843755?id=1205376682832142" target="_blank">Facebook Pixel</a> and get a code.' ),
-						],
-					],
 					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_gtag_id' => [
 						'label'      => __( 'Global Site Tag ID (gtag.js)', 'wpl-elementor-events-tracker' ),
 						'field_args' => [
@@ -206,6 +185,27 @@ class Main {
 						'field_args' => [
 							'type' => 'text',
 							'desc' => __( 'Know how to add <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs" target="_blank">Analytics.js code</a> and <a href="https://support.google.com/analytics/answer/1008080?hl=en" target="_blank">where to get</a> the tracking code' ),
+						],
+					],
+					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_facebook_pixel_id' => [
+						'label'      => __( 'Facebook Pixel ID', 'wpl-elementor-events-tracker' ),
+						'field_args' => [
+							'type' => 'text',
+							'desc' => __( 'Know how to create a <a href="https://www.facebook.com/business/help/952192354843755?id=1205376682832142" target="_blank">Facebook Pixel</a> and get a code.' ),
+						],
+					],
+					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_yandex_metrika_id' => [
+						'label'      => __( 'Yandex Metrika ID', 'wpl-elementor-events-tracker' ),
+						'field_args' => [
+							'type' => 'text',
+							'desc' => __( 'See Yandex Metrika <a href="https://yandex.ru/support/metrica/quick-start.html?lang=en" target="_blank">Quick Start Guide</a>' ),
+						],
+					],
+					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_vkontakte_pixel_id' => [
+						'label'      => __( 'Vkontakte Pixel ID', 'wpl-elementor-events-tracker' ),
+						'field_args' => [
+							'type' => 'text',
+							'desc' => __( 'See <a href="https://vk.com/faq12142" target="_blank">VK FAQ</a> to create pixel and get code' ),
 						],
 					],
 				],
