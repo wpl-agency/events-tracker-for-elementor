@@ -3,7 +3,7 @@
  * Events Tracker For Elementor
  *
  * @link              https://wordpress.org/plugins/events-tracker-for-elementor/
- * @package           wpl-elementor-events-tracker
+ * @package           events-tracker-for-elementor
  *
  * @wordpress-plugin
  * Plugin Name:       Events Tracker for Elementor
@@ -14,17 +14,17 @@
  * Author URI:        https://wpl.agency/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       wpl-elementor-events-tracker
+ * Text Domain:       events-tracker-for-elementor
  * Domain Path:       /languages
  */
-namespace WPL\Elementor_Events_Tracker;
+namespace WPL\Events_Tracker_For_Elementor;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 define( 'WPL_ELEMENTOR_EVENTS_TRACKER_VERSION', '1.1' );
-define( 'WPL_ELEMENTOR_EVENTS_TRACKER_SLUG', 'wpl_elementor_events_tracker' );
+define( 'WPL_ELEMENTOR_EVENTS_TRACKER_SLUG', 'events_tracker_for_elementor' );
 define( 'WPL_ELEMENTOR_EVENTS_TRACKER_FILE', __FILE__ );
 define( 'WPL_ELEMENTOR_EVENTS_TRACKER_DIR', trailingslashit( __DIR__ ) );
 define( 'WPL_ELEMENTOR_EVENTS_TRACKER_URL', plugin_dir_url( WPL_ELEMENTOR_EVENTS_TRACKER_FILE ) );
@@ -36,12 +36,12 @@ define( 'WPL_ELEMENTOR_EVENTS_TRACKER_URL', plugin_dir_url( WPL_ELEMENTOR_EVENTS
  *
  * @return void
  */
-function wpl_elementor_events_tracker() {
+function wpl_events_tracker_for_elementor() {
 
-	load_plugin_textdomain( 'wpl-elementor-events-tracker' );
+	load_plugin_textdomain( 'events-tracker-for-elementor' );
 
 	if ( ! did_action( 'elementor/loaded' ) ) {
-		add_action( 'admin_notices', __NAMESPACE__ . '\wpl_elementor_pro_fail_load' );
+		add_action( 'admin_notices', __NAMESPACE__ . '\wpl_events_tracker_for_elementor_fail_load' );
 
 		return;
 	}
@@ -50,7 +50,7 @@ function wpl_elementor_events_tracker() {
 	new Main();
 }
 
-add_action( 'plugins_loaded', __NAMESPACE__ . '\wpl_elementor_events_tracker' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\wpl_events_tracker_for_elementor' );
 
 /**
  * Show in WP Dashboard notice about the plugin is not activated.
@@ -59,12 +59,12 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\wpl_elementor_events_tracker' );
  *
  * @return void
  */
-function wpl_elementor_pro_fail_load() {
+function wpl_events_tracker_for_elementor_fail_load() {
 	$message = sprintf(
 	/* translators: 1: Plugin name 2: Elementor */
-		esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', 'wpl-elementor-events-tracker' ),
-		'<strong>' . esc_html__( 'Events Tracker For Elementor', 'wpl-elementor-events-tracker' ) . '</strong>',
-		'<strong>' . esc_html__( 'Elementor', 'wpl-elementor-events-tracker' ) . '</strong>'
+		esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', 'events-tracker-for-elementor' ),
+		'<strong>' . esc_html__( 'Events Tracker For Elementor', 'events-tracker-for-elementor' ) . '</strong>',
+		'<strong>' . esc_html__( 'Elementor', 'events-tracker-for-elementor' ) . '</strong>'
 	);
 
 	echo '<div class="error"><p>' . $message . '</p></div>';

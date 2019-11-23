@@ -13,7 +13,7 @@
 						var $link    = $( this ),
 							href     = $link.attr( 'href' ),
 							lightbox = $link.data( 'elementor-open-lightbox' ),
-							options  = $link.parents( '.wpl-elementor-events-tracker' ).data( 'wpl_tracker' );
+							options  = $link.parents( '.events-tracker-for-elementor' ).data( 'wpl_tracker' );
 
 						// Отменим переход по ссылке.
 						event.preventDefault();
@@ -42,7 +42,7 @@
 					'[data-wpl_tracker] form',
 					function ( event ) {
 						var $form   = $( this ),
-							options = $form.parents( '.wpl-elementor-events-tracker' ).data( 'wpl_tracker' );
+							options = $form.parents( '.events-tracker-for-elementor' ).data( 'wpl_tracker' );
 
 						track_element( options );
 						console.log( 'Submit success' );
