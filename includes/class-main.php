@@ -234,7 +234,7 @@ class Main {
 	public function add_tracking_controls( $element, $args ) {
 
 		$element->start_controls_section(
-			'wpl_elementor_events_tracker',
+			'events_tracker_for_elementor',
 			array(
 				'label' => esc_html__( 'Events Tracking', 'events-tracker-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
@@ -242,7 +242,7 @@ class Main {
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_gtag',
+			'events_tracker_for_elementor_gtag',
 			array(
 				'label'       => esc_html__( 'Track with Google Universal Tag (gtag.js)', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
@@ -251,13 +251,13 @@ class Main {
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_gtag_note',
+			'events_tracker_for_elementor_gtag_note',
 			array(
 				'type'            => Controls_Manager::RAW_HTML,
 				'show_label'      => false,
 				'raw'             => esc_html__( 'Tracking events with new Google Analytics code (gtag.js)', 'events-tracker-for-elementor' ),
 				'condition'       => array(
-					'wpl_elementor_events_tracker_gtag' => 'yes',
+					'events_tracker_for_elementor_gtag' => 'yes',
 				),
 				'render_type'     => 'none',
 				'content_classes' => 'elementor-descriptor',
@@ -265,49 +265,49 @@ class Main {
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_gtag_category',
+			'events_tracker_for_elementor_gtag_category',
 			array(
 				'label'       => esc_html__( 'Event Category', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'i.e Outbound Link', 'events-tracker-for-elementor' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_gtag' => 'yes',
+					'events_tracker_for_elementor_gtag' => 'yes',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_gtag_action',
+			'events_tracker_for_elementor_gtag_action',
 			array(
 				'label'       => esc_html__( 'Event Action', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'i.e click', 'events-tracker-for-elementor' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_gtag' => 'yes',
+					'events_tracker_for_elementor_gtag' => 'yes',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_gtag_label',
+			'events_tracker_for_elementor_gtag_label',
 			array(
 				'label'       => esc_html__( 'Event Label', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'i.e Fall Campaign', 'events-tracker-for-elementor' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_gtag' => 'yes',
+					'events_tracker_for_elementor_gtag' => 'yes',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_adwords',
+			'events_tracker_for_elementor_adwords',
 			array(
 				'label'       => esc_html__( 'Track Adwords Conversion (gtag.js)', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
@@ -316,14 +316,14 @@ class Main {
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_adwords_label',
+			'events_tracker_for_elementor_adwords_label',
 			array(
 				'label'       => esc_html__( 'Event Label', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'bC-D_efG-h12_34-567', 'events-tracker-for-elementor' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_adwords' => 'yes',
+					'events_tracker_for_elementor_adwords' => 'yes',
 				),
 				'render_type' => 'none',
 			)
@@ -333,7 +333,7 @@ class Main {
 		 * @link https://support.google.com/analytics/answer/6205902
 		 */
 		$element->add_control(
-			'wpl_elementor_events_tracker_adwords_currency',
+			'events_tracker_for_elementor_adwords_currency',
 			array(
 				'label'       => esc_html__( 'Event Currency', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
@@ -348,14 +348,14 @@ class Main {
 				'default'     => 'RUB',
 				'show_label'  => true,
 				'condition'   => array(
-					'wpl_elementor_events_tracker_adwords' => 'yes',
+					'events_tracker_for_elementor_adwords' => 'yes',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_adwords_value',
+			'events_tracker_for_elementor_adwords_value',
 			array(
 				'label'       => esc_html__( 'Event Value', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
@@ -363,14 +363,14 @@ class Main {
 				'placeholder' => esc_html__( 'i.e 100', 'events-tracker-for-elementor' ),
 				'default'     => 0,
 				'condition'   => array(
-					'wpl_elementor_events_tracker_adwords' => 'yes',
+					'events_tracker_for_elementor_adwords' => 'yes',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_analytics',
+			'events_tracker_for_elementor_analytics',
 			array(
 				'label'       => esc_html__( 'Track with Google Analytics (analytics.js)', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
@@ -379,13 +379,13 @@ class Main {
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_analytics_note',
+			'events_tracker_for_elementor_analytics_note',
 			array(
 				'type'            => Controls_Manager::RAW_HTML,
 				'show_label'      => false,
 				'raw'             => esc_html__( 'Tracking events with old Google Analytics code (analytics.js)', 'events-tracker-for-elementor' ),
 				'condition'       => array(
-					'wpl_elementor_events_tracker_analytics' => 'yes',
+					'events_tracker_for_elementor_analytics' => 'yes',
 				),
 				'render_type'     => 'none',
 				'content_classes' => 'elementor-descriptor',
@@ -393,49 +393,49 @@ class Main {
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_analytics_category',
+			'events_tracker_for_elementor_analytics_category',
 			array(
 				'label'       => esc_html__( 'Event Category', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'i.e Outbound Link', 'events-tracker-for-elementor' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_analytics' => 'yes',
+					'events_tracker_for_elementor_analytics' => 'yes',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_analytics_action',
+			'events_tracker_for_elementor_analytics_action',
 			array(
 				'label'       => esc_html__( 'Event Action', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'i.e click', 'events-tracker-for-elementor' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_analytics' => 'yes',
+					'events_tracker_for_elementor_analytics' => 'yes',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_analytics_label',
+			'events_tracker_for_elementor_analytics_label',
 			array(
 				'label'       => esc_html__( 'Event Label', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'i.e Fall Campaign', 'events-tracker-for-elementor' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_analytics' => 'yes',
+					'events_tracker_for_elementor_analytics' => 'yes',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_facebook',
+			'events_tracker_for_elementor_facebook',
 			array(
 				'label'       => esc_html__( 'Track with Facebook', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
@@ -444,7 +444,7 @@ class Main {
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_facebook_event_name',
+			'events_tracker_for_elementor_facebook_event_name',
 			array(
 				'label'       => esc_html__( 'Facebook Event', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::SELECT,
@@ -470,29 +470,29 @@ class Main {
 				],
 				'default'     => 'ViewContent',
 				'condition'   => array(
-					'wpl_elementor_events_tracker_facebook' => 'yes',
+					'events_tracker_for_elementor_facebook' => 'yes',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_facebook_event_name_custom',
+			'events_tracker_for_elementor_facebook_event_name_custom',
 			array(
 				'label'       => esc_html__( 'Custom Event', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'i.e Whatsapp', 'events-tracker-for-elementor' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_facebook'            => 'yes',
-					'wpl_elementor_events_tracker_facebook_event_name' => 'Custom',
+					'events_tracker_for_elementor_facebook'            => 'yes',
+					'events_tracker_for_elementor_facebook_event_name' => 'Custom',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_yandex_metrika',
+			'events_tracker_for_elementor_yandex_metrika',
 			array(
 				'label'       => esc_html__( 'Track with Yandex Metrika', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
@@ -501,21 +501,21 @@ class Main {
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_yandex_metrika_event_name',
+			'events_tracker_for_elementor_yandex_metrika_event_name',
 			array(
 				'label'       => esc_html__( 'Event Name', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'i.e Lead', 'events-tracker-for-elementor' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_yandex_metrika' => 'yes',
+					'events_tracker_for_elementor_yandex_metrika' => 'yes',
 				),
 				'render_type' => 'none',
 			)
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_vkontakte',
+			'events_tracker_for_elementor_vkontakte',
 			array(
 				'label'       => esc_html__( 'Track with Vkontakte', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
@@ -524,14 +524,14 @@ class Main {
 		);
 
 		$element->add_control(
-			'wpl_elementor_events_tracker_vkontakte_event_name',
+			'events_tracker_for_elementor_vkontakte_event_name',
 			array(
 				'label'       => esc_html__( 'Event Name', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'show_label'  => true,
 				'placeholder' => esc_html__( 'i.e Lead', 'events-tracker-for-elementor' ),
 				'condition'   => array(
-					'wpl_elementor_events_tracker_vkontakte' => 'yes',
+					'events_tracker_for_elementor_vkontakte' => 'yes',
 				),
 				'render_type' => 'none',
 			)
@@ -554,56 +554,56 @@ class Main {
 			$has_tracking = false;
 
 			// Vkontakte.
-			if ( isset( $settings['wpl_elementor_events_tracker_vkontakte'] ) ) {
+			if ( isset( $settings['events_tracker_for_elementor_vkontakte'] ) ) {
 				$has_tracking                 = true;
 				$attr['vkontakte']            = true;
-				$attr['vkontakte_event_name'] = $settings['wpl_elementor_events_tracker_vkontakte_event_name'];
+				$attr['vkontakte_event_name'] = $settings['events_tracker_for_elementor_vkontakte_event_name'];
 			}
 
 			// Yandex Metrika.
-			if ( isset( $settings['wpl_elementor_events_tracker_yandex_metrika'] ) ) {
+			if ( isset( $settings['events_tracker_for_elementor_yandex_metrika'] ) ) {
 				$has_tracking                      = true;
 				$attr['yandex_metrika']            = true;
-				$attr['yandex_metrika_event_name'] = $settings['wpl_elementor_events_tracker_yandex_metrika_event_name'];
+				$attr['yandex_metrika_event_name'] = $settings['events_tracker_for_elementor_yandex_metrika_event_name'];
 				$attr['yandex_metrika_id']         = $this->get_option( 'yandex_metrika_id' );
 			}
 
 			// Facebook.
-			if ( isset( $settings['wpl_elementor_events_tracker_facebook'] ) ) {
+			if ( isset( $settings['events_tracker_for_elementor_facebook'] ) ) {
 				$has_tracking                = true;
 				$attr['facebook']            = true;
-				$attr['facebook_event_name'] = $settings['wpl_elementor_events_tracker_facebook_event_name'];
+				$attr['facebook_event_name'] = $settings['events_tracker_for_elementor_facebook_event_name'];
 
-				if ( isset( $settings['wpl_elementor_events_tracker_facebook_event_name_custom'] ) ) {
-					$attr['facebook_event_name_custom'] = $settings['wpl_elementor_events_tracker_facebook_event_name_custom'];
+				if ( isset( $settings['events_tracker_for_elementor_facebook_event_name_custom'] ) ) {
+					$attr['facebook_event_name_custom'] = $settings['events_tracker_for_elementor_facebook_event_name_custom'];
 				}
 			}
 
 			// Google Analytics.
-			if ( isset( $settings['wpl_elementor_events_tracker_analytics'] ) ) {
+			if ( isset( $settings['events_tracker_for_elementor_analytics'] ) ) {
 				$has_tracking               = true;
 				$attr['analytics']          = true;
-				$attr['analytics_category'] = $settings['wpl_elementor_events_tracker_analytics_category'];
-				$attr['analytics_action']   = $settings['wpl_elementor_events_tracker_analytics_action'];
-				$attr['analytics_label']    = $settings['wpl_elementor_events_tracker_analytics_label'];
+				$attr['analytics_category'] = $settings['events_tracker_for_elementor_analytics_category'];
+				$attr['analytics_action']   = $settings['events_tracker_for_elementor_analytics_action'];
+				$attr['analytics_label']    = $settings['events_tracker_for_elementor_analytics_label'];
 			}
 
 			// Google Global Tag (gtag).
-			if ( isset( $settings['wpl_elementor_events_tracker_gtag'] ) ) {
+			if ( isset( $settings['events_tracker_for_elementor_gtag'] ) ) {
 				$has_tracking          = true;
 				$attr['gtag']          = true;
-				$attr['gtag_category'] = $settings['wpl_elementor_events_tracker_gtag_category'];
-				$attr['gtag_action']   = $settings['wpl_elementor_events_tracker_gtag_action'];
-				$attr['gtag_label']    = $settings['wpl_elementor_events_tracker_gtag_label'];
+				$attr['gtag_category'] = $settings['events_tracker_for_elementor_gtag_category'];
+				$attr['gtag_action']   = $settings['events_tracker_for_elementor_gtag_action'];
+				$attr['gtag_label']    = $settings['events_tracker_for_elementor_gtag_label'];
 			}
 
 			// Google Adwords Conversion (gtag).
-			if ( isset( $settings['wpl_elementor_events_tracker_adwords'] ) ) {
+			if ( isset( $settings['events_tracker_for_elementor_adwords'] ) ) {
 				$has_tracking             = true;
 				$attr['adwords']          = true;
-				$attr['adwords_label']    = $settings['wpl_elementor_events_tracker_adwords_label'];
-				$attr['adwords_currency'] = $settings['wpl_elementor_events_tracker_adwords_currency'];
-				$attr['adwords_value']    = $settings['wpl_elementor_events_tracker_adwords_value'];
+				$attr['adwords_label']    = $settings['events_tracker_for_elementor_adwords_label'];
+				$attr['adwords_currency'] = $settings['events_tracker_for_elementor_adwords_currency'];
+				$attr['adwords_value']    = $settings['events_tracker_for_elementor_adwords_value'];
 				$attr['adwords_id']       = $this->get_option( 'adwords_id' );
 			}
 
