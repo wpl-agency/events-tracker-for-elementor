@@ -2,12 +2,12 @@
 /**
  * Events Tracker For Elementor
  *
- * @link              https://wordpress.org/plugins/wpl-elementor-events-tracker/
+ * @link              https://wordpress.org/plugins/events-tracker-for-elementor/
  * @package           wpl-elementor-events-tracker
  *
  * @wordpress-plugin
  * Plugin Name:       Events Tracker for Elementor
- * Plugin URI:        https://wordpress.org/plugins/wpl-elementor-events-tracker/
+ * Plugin URI:        https://wordpress.org/plugins/events-tracker-for-elementor/
  * Description:       Track Click or Submit events and conversions for any Elementor widget with Google Analytics, Facebook, Yandex Metrika, Vkontakte.
  * Version:           1.1
  * Author:            wpl.agency
