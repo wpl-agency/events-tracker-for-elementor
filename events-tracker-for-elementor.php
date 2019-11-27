@@ -46,8 +46,11 @@ function wpl_events_tracker_for_elementor() {
 		return;
 	}
 
-	require_once WPL_ELEMENTOR_EVENTS_TRACKER_DIR . 'includes/class-main.php';
-	new Main();
+	require_once __DIR__ . '/includes/class-options.php';
+	require_once __DIR__ . '/includes/class-main.php';
+
+	$settings = new Options();
+	$main     = new Main();
 }
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\wpl_events_tracker_for_elementor' );

@@ -6,16 +6,31 @@ namespace WPL\Events_Tracker_For_Elementor;
 
 use Elementor\Controls_Manager;
 use Elementor\Element_Base;
-use Elementor\Settings;
 use Elementor\Widget_Base;
 
 class Main {
+	/**
+	 * @var Options $options
+	 */
+	private $options;
+
 	/**
 	 * @var array $allowed_widget Array of allowed widgets to tracking.
 	 */
 	private $allowed_widget = array( 'button', 'form', 'heading', 'image' );
 
-	public function __construct() {
+	/**
+	 * Main constructor.
+	 *
+	 * @param Options $options
+	 */
+	public function __construct( $options = null ) {
+		$this->options = $options;
+
+		if ( ! $this->options ) {
+			$this->options = new Options();
+		}
+
 		$this->hooks();
 	}
 
@@ -29,7 +44,6 @@ class Main {
 		add_action( 'elementor/element/image/section_image/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ) );
 		add_action( 'elementor/frontend/before_enqueue_scripts', array( $this, 'enqueue_scripts' ), 9 );
-		add_action( 'elementor/admin/after_create_settings/elementor', [ $this, 'register_settings' ] );
 		add_action( 'wp_footer', [ $this, 'add_tracker_code' ] );
 	}
 
@@ -49,33 +63,33 @@ class Main {
 	 * Add tracker codes to site footer.
 	 */
 	public function add_tracker_code() {
-		$vkontakte_pixel_id = $this->get_option( 'vkontakte_pixel_id' );
-		$yandex_metrika_id  = $this->get_option( 'yandex_metrika_id' );
-		$facebook_pixel_id  = $this->get_option( 'facebook_pixel_id' );
-		$gtag_id            = $this->get_option( 'gtag_id' );
-		$adwords_id         = $this->get_option( 'adwords_id' );
-		$analytics_id       = $this->get_option( 'analytics_id' );
+		$vkontakte_pixel_id       = $this->get_option( 'vkontakte_pixel_id' );
+		$yandex_metrika_code_type = $this->get_option( 'yandex_metrika_code_type' );
+		$yandex_metrika_id        = $this->get_option( 'yandex_metrika_id' );
+		$facebook_pixel_id        = $this->get_option( 'facebook_pixel_id' );
+		$gtag_id                  = $this->get_option( 'gtag_id' );
+		$adwords_id               = $this->get_option( 'adwords_id' );
+		$analytics_id             = $this->get_option( 'analytics_id' );
 
 		if ( $vkontakte_pixel_id ) {
 			?>
-			<div id="vk_api_transport"></div>
-			<script>
-				var pixel;
-				window.vkAsyncInit = function() {
-					pixel = new VK.Pixel( '<?php echo esc_js( $vkontakte_pixel_id ); ?>' );
-				};
-				setTimeout(function() {
-					var el = document.createElement( 'script' );
-					el.type = 'text/javascript';
-					el.src = 'https://vk.com/js/api/openapi.js?159';
-					el.async = true;
-					document.getElementById( 'vk_api_transport' ).appendChild(el);
-				}, 0);
-			</script>
+			<script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?162",t.onload=function(){VK.Retargeting.Init("<?php echo esc_js( $vkontakte_pixel_id ); ?>"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=<?php echo esc_js( $vkontakte_pixel_id ); ?>" style="position:fixed; left:-999px;" alt=""/></noscript>
 			<?php
 		}
 
-		if ( $yandex_metrika_id ) {
+		if ( $yandex_metrika_id && in_array( 'tracking', $yandex_metrika_code_type ) ) {
+			// Настройки метрики по умолчанию.
+			$yandex_metrika_config = array(
+				'clickmap'            => true,
+				'trackLinks'          => true,
+				'accurateTrackBounce' => true,
+				'trackHash'           => true,
+			);
+
+			// Вебвизор, карта скроллинга, аналитика форм.
+			if ( in_array( 'webvisor', $yandex_metrika_code_type ) ) {
+				$yandex_metrika_config['webvisor'] = true;
+			}
 			?>
 			<!-- Yandex.Metrika counter -->
 			<script type="text/javascript" >
@@ -83,13 +97,7 @@ class Main {
 					m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
 				(window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym");
 
-				ym(<?php echo esc_js( $yandex_metrika_id ); ?>, "init", {
-					clickmap:true,
-					trackLinks:true,
-					accurateTrackBounce:true,
-					webvisor:true,
-					trackHash:true
-				});
+				ym(<?php echo esc_js( $yandex_metrika_id ); ?>, "init", <?php echo json_encode( $yandex_metrika_config ); ?>);
 			</script>
 			<noscript><div><img src="https://mc.yandex.ru/watch/5695870" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 			<!-- /Yandex.Metrika counter -->
@@ -141,74 +149,6 @@ class Main {
 			<!-- End Google Analytics -->
 			<?php
 		}
-	}
-
-	/**
-	 * Create Setting Tab
-	 *
-	 * @param Settings $settings Elementor "Settings" page in WordPress Dashboard.
-	 *
-	 * @since 1.3
-	 *
-	 * @access public
-	 */
-	public function register_settings( Settings $settings ) {
-		$settings->add_section(
-			Settings::TAB_INTEGRATIONS,
-			WPL_ELEMENTOR_EVENTS_TRACKER_SLUG,
-			[
-				'label'    => __( 'Events Tracker', 'events-tracker-for-elementor' ),
-				'callback' => function() {
-					$message = __( '<p>After you select the service, the form appears. In this form, you need to provide your contact information. After you fill in the form, the “Service successfully connected” text appears. The created key is now available in the “Keys” section. Use it when you enable the API.</p>', 'events-tracker-for-elementor' );
-
-					echo $message;
-				},
-				'fields'   => [
-					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_gtag_id' => [
-						'label'      => __( 'Global Site Tag ID (gtag.js)', 'events-tracker-for-elementor' ),
-						'field_args' => [
-							'type' => 'text',
-							'desc' => __( 'Learn <a href="https://support.google.com/analytics/answer/1008080?hl=en" target="_blank">how to set up the Analytics tag</a> and where to get the code' ),
-						],
-					],
-					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_adwords_id' => [
-						'label'      => __( 'Adwords Converion ID (gtag.js)', 'events-tracker-for-elementor' ),
-						'field_args' => [
-							'type' => 'text',
-							'desc' => __( 'Learn where to find <a href="https://support.google.com/google-ads/thread/1449693?hl=en" target="_blank">Google Ads Conversion ID</a>' ),
-						],
-					],
-					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_analytics_id' => [
-						'label'      => __( 'Google Analytics ID (analytics.js)', 'events-tracker-for-elementor' ),
-						'field_args' => [
-							'type' => 'text',
-							'desc' => __( 'Know how to add <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs" target="_blank">Analytics.js code</a> and <a href="https://support.google.com/analytics/answer/1008080?hl=en" target="_blank">where to get</a> the tracking code' ),
-						],
-					],
-					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_facebook_pixel_id' => [
-						'label'      => __( 'Facebook Pixel ID', 'events-tracker-for-elementor' ),
-						'field_args' => [
-							'type' => 'text',
-							'desc' => __( 'Know how to create a <a href="https://www.facebook.com/business/help/952192354843755?id=1205376682832142" target="_blank">Facebook Pixel</a> and get a code.' ),
-						],
-					],
-					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_yandex_metrika_id' => [
-						'label'      => __( 'Yandex Metrika ID', 'events-tracker-for-elementor' ),
-						'field_args' => [
-							'type' => 'text',
-							'desc' => __( 'See Yandex Metrika <a href="https://yandex.ru/support/metrica/quick-start.html?lang=en" target="_blank">Quick Start Guide</a>' ),
-						],
-					],
-					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_vkontakte_pixel_id' => [
-						'label'      => __( 'Vkontakte Pixel ID', 'events-tracker-for-elementor' ),
-						'field_args' => [
-							'type' => 'text',
-							'desc' => __( 'See <a href="https://vk.com/faq12142" target="_blank">VK FAQ</a> to create pixel and get code' ),
-						],
-					],
-				],
-			]
-		);
 	}
 
 	/**
