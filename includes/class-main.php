@@ -68,8 +68,11 @@ class Main {
 		$yandex_metrika_id        = $this->get_option( 'yandex_metrika_id' );
 		$facebook_pixel_id        = $this->get_option( 'facebook_pixel_id' );
 		$gtag_id                  = $this->get_option( 'gtag_id' );
+		$gtag_code_type           = $this->get_option( 'gtag_code_type' );
 		$adwords_id               = $this->get_option( 'adwords_id' );
+		$adwords_code_type        = $this->get_option( 'adwords_code_type' );
 		$analytics_id             = $this->get_option( 'analytics_id' );
+		$analytics_code_type      = $this->get_option( 'analytics_code_type' );
 
 		if ( $vkontakte_pixel_id ) {
 			?>
@@ -124,7 +127,7 @@ class Main {
 			<?php
 		}
 
-		if ( $gtag_id || $adwords_id ) {
+		if ( $gtag_id && in_array( 'tracking', $gtag_code_type ) ) {
 			?>
 			<!-- Global site tag (gtag.js) - Google Analytics -->
 			<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $gtag_id ); ?>"></script>
@@ -137,7 +140,20 @@ class Main {
 			<?php
 		}
 
-		if ( $analytics_id ) {
+		if ( $adwords_id && in_array( 'tracking', $adwords_code_type ) ) {
+			?>
+			<!-- Global site tag (gtag.js) - Google Analytics -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $gtag_id ); ?>"></script>
+			<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', '<?php echo esc_js( $gtag_id ); ?>');
+			</script>
+			<?php
+		}
+
+		if ( $analytics_id && in_array( 'tracking', $analytics_code_type ) ) {
 			?>
 			<!-- Google Analytics -->
 			<script>
