@@ -39,7 +39,7 @@ class Main {
 	 */
 	public function hooks() {
 		add_action( 'elementor/element/button/section_button/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
-		add_action( 'elementor/element/form/section_form_fields/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+		add_action( 'elementor/element/form/section_form_options/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/heading/section_title/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/image/section_image/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ) );
