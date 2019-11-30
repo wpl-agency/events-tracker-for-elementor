@@ -39,7 +39,7 @@ class Main {
 	 */
 	public function hooks() {
 		add_action( 'elementor/element/button/section_button/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
-		add_action( 'elementor/element/form/section_form_fields/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+		add_action( 'elementor/element/form/section_form_options/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/heading/section_title/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/image/section_image/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ) );
@@ -68,8 +68,11 @@ class Main {
 		$yandex_metrika_id        = $this->get_option( 'yandex_metrika_id' );
 		$facebook_pixel_id        = $this->get_option( 'facebook_pixel_id' );
 		$gtag_id                  = $this->get_option( 'gtag_id' );
+		$gtag_code_type           = $this->get_option( 'gtag_code_type' );
 		$adwords_id               = $this->get_option( 'adwords_id' );
+		$adwords_code_type        = $this->get_option( 'adwords_code_type' );
 		$analytics_id             = $this->get_option( 'analytics_id' );
+		$analytics_code_type      = $this->get_option( 'analytics_code_type' );
 
 		if ( $vkontakte_pixel_id ) {
 			?>
@@ -124,7 +127,7 @@ class Main {
 			<?php
 		}
 
-		if ( $gtag_id || $adwords_id ) {
+		if ( $gtag_id && in_array( 'tracking', $gtag_code_type ) ) {
 			?>
 			<!-- Global site tag (gtag.js) - Google Analytics -->
 			<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $gtag_id ); ?>"></script>
@@ -137,7 +140,20 @@ class Main {
 			<?php
 		}
 
-		if ( $analytics_id ) {
+		if ( $adwords_id && in_array( 'tracking', $adwords_code_type ) ) {
+			?>
+			<!-- Global site tag (gtag.js) - Google Analytics -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $gtag_id ); ?>"></script>
+			<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', '<?php echo esc_js( $gtag_id ); ?>');
+			</script>
+			<?php
+		}
+
+		if ( $analytics_id && in_array( 'tracking', $analytics_code_type ) ) {
 			?>
 			<!-- Google Analytics -->
 			<script>
