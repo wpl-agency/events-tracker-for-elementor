@@ -223,6 +223,9 @@ class Main {
 	 */
 	public function add_tracking_controls( $element, $args ) {
 
+		// Element name.
+		$name = $element->get_name();
+
 		$element->start_controls_section(
 			'events_tracker_for_elementor',
 			array(
@@ -468,6 +471,32 @@ class Main {
 		);
 
 		$element->add_control(
+			'events_tracker_for_elementor_gtm',
+			array(
+				'label'       => esc_html__( 'Track with Google Tag Manager)', 'events-tracker-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'render_type' => 'none',
+			)
+		);
+
+		// Hidden control from Button & Form widgets.
+		if ( ! in_array( $name, [ 'form', 'button' ] ) ) {
+			$element->add_control(
+				'events_tracker_for_elementor_gtm_css_id',
+				array(
+					'label'       => esc_html__( 'CSS ID', 'events-tracker-for-elementor' ),
+					'type'        => Controls_Manager::TEXT,
+					'show_label'  => true,
+					'placeholder' => esc_html__( 'Without #', 'events-tracker-for-elementor' ),
+					'condition'   => array(
+						'events_tracker_for_elementor_gtm' => 'yes',
+					),
+					'render_type' => 'none',
+				)
+			);
+		}
+
+		$element->add_control(
 			'events_tracker_for_elementor_facebook',
 			array(
 				'label'       => esc_html__( 'Track with Facebook', 'events-tracker-for-elementor' ),
@@ -578,7 +607,9 @@ class Main {
 	 */
 	public function before_render( $element ) {
 
-		if ( in_array( $element->get_name(), $this->allowed_widget ) ) {
+		$name = $element->get_name();
+
+		if ( in_array( $name, $this->allowed_widget ) ) {
 
 			$data = $element->get_data();
 
@@ -647,6 +678,20 @@ class Main {
 						'data-wpl_tracker' => json_encode( $attr ),
 						'class'            => 'events-tracker-for-elementor',
 					)
+				);
+			}
+
+			if ( isset( $settings['events_tracker_for_elementor_gtm_css_id'] ) ) {
+				$control = 'url';
+
+				if ( 'image' === $name ) {
+					$control = 'link';
+				}
+
+				$element->add_render_attribute(
+					$control,
+					'data-wpl_id',
+					esc_attr( $settings['events_tracker_for_elementor_gtm_css_id'] )
 				);
 			}
 		}
