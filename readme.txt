@@ -40,7 +40,7 @@ Simple but extremely useful Elementor addon that allows you to track events and 
 
 **Google Ads (Adwords)** — supports advertisement conversion tracking via gtag.js
 
-**Google Tag Manager** (⏳ soon) — allows you to add CSS IDs for elements that do not have a special field for this. For example: Heading, Image etc. On the next step, you can create GTM Trigger and use this IDs to track events.
+**Google Tag Manager** — allows you to add IDs into elements that do not have a special field for this. For example: Heading, Image etc. On the next step, you can create GTM Trigger and use this IDs to track events.
 
 **Facebook** — you can select built in Facebook event types to spot which action match to which event: Lead, Contact, Purchase, etc. or even Custom events. Then you can create Facebook conversions and audiences and setup the more targeted ads.
 
