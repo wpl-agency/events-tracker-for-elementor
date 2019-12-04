@@ -44,7 +44,9 @@ class Main {
 		add_action( 'elementor/element/image/section_image/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ) );
 		add_action( 'elementor/frontend/before_enqueue_scripts', array( $this, 'enqueue_scripts' ), 9 );
-		add_action( 'wp_footer', [ $this, 'add_tracker_code' ] );
+		add_action( 'wp_footer', [ $this, 'add_tracker_code_to_footer' ] );
+		add_action( 'wp_head', [ $this, 'add_tracker_code_to_header' ] );
+		add_action( 'wp_body_open', [ $this, 'add_tracker_code_to_body' ] );
 	}
 
 	/**
@@ -60,9 +62,43 @@ class Main {
 	}
 
 	/**
+	 * Add tracker codes to site header.
+	 */
+	public function add_tracker_code_to_header() {
+		$gtm_id = $this->get_option( 'gtm_id' );
+
+		if ( $gtm_id ) {
+			?>
+			<!-- Google Tag Manager -->
+			<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+						new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+					j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+					'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+				})(window,document,'script','dataLayer','<?php echo esc_js( $gtm_id ); ?>');</script>
+			<!-- End Google Tag Manager -->
+			<?php
+		}
+	}
+
+	/**
+	 * Add tracker codes to site body.
+	 */
+	public function add_tracker_code_to_body() {
+		$gtm_id = $this->get_option( 'gtm_id' );
+
+		if ( $gtm_id ) {
+			?>
+			<!-- Google Tag Manager (noscript) -->
+			<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo esc_js( $gtm_id ); ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+			<!-- End Google Tag Manager (noscript) -->
+			<?php
+		}
+	}
+
+	/**
 	 * Add tracker codes to site footer.
 	 */
-	public function add_tracker_code() {
+	public function add_tracker_code_to_footer() {
 		$vkontakte_pixel_id       = $this->get_option( 'vkontakte_pixel_id' );
 		$yandex_metrika_code_type = $this->get_option( 'yandex_metrika_code_type' );
 		$yandex_metrika_id        = $this->get_option( 'yandex_metrika_id' );
