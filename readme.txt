@@ -27,6 +27,12 @@ Simple but extremely useful Elementor addon that allows you to track events and 
 - Pricing Table widget
 - Flipbox widget
 - Media Carousel widget
+- Icon List widget
+- Icon Box widget
+- Image Box widget
+- Icon
+- Social Icons widget
+- Share Buttons widget
 
 ### 📈 Supports all popular analytics and advertisement systems
 
