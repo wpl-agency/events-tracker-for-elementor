@@ -4,7 +4,7 @@ Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vlontakte, metrika, gtag, analytics, tracker, events
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 1.1
+Stable tag: 1.2
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -116,6 +116,9 @@ You're welcome to create new issue in our [support forum](https://wordpress.org/
 6. Tracking codes and pixels insertion
 
 == Changelog ==
+= 1.2 (05.12.2019) =
+* Added Google Tag Manager tracking
+
 = 1.1 (22.11.2019) =
 * Fixed bugs
 * Added images & headings to tracking
