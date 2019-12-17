@@ -65,7 +65,8 @@ Events Tracker for Elementor has built in integration with all analytics/ads sys
 
 If you have some questions or suggestions, welcome to our [support forum](https://wordpress.org/support/plugin/events-tracker-for-elementor/).
 
-We made some helpful documentation articles. See on the [wpl.agency](https://wpl.agency/) website.
+- [How to Install Events Tracker for Elementor](https://wpl.agency/docs/how-to-install-events-tracker-for-elementor/)
+- [How to track Elementor Pro forms with Google Analytics](https://wpl.agency/docs/how-to-track-elementor-pro-forms-with-google-analytics/)
 
 ### 💙 Love Events Tracker for Elementor?
 If the plugin was useful, rate it with a [5 star rating](https://wordpress.org/support/plugin/events-tracker-for-elementor/reviews/) and write a few nice words.
