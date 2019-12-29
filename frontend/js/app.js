@@ -12,6 +12,7 @@
 					function ( event ) {
 						var $link    = $( this ),
 							href     = $link.attr( 'href' ),
+							target   = $link.attr( 'target' ),
 							lightbox = $link.data( 'elementor-open-lightbox' ),
 							options  = $link.parents( '.events-tracker-for-elementor' ).data( 'wpl_tracker' );
 
@@ -23,12 +24,22 @@
 						if ( href && '#' !== href && ( ! lightbox || 'no' === lightbox ) ) {
 							track_element( options );
 							console.log( 'Click with link' );
-							setTimeout(
-								function () {
-									document.location.href = href;
-								},
-								2000
-							);
+
+							/**
+							 * Open in new window.
+							 *
+							 * @link https://learn.javascript.ru/popup-windows
+							 */
+							if ( target && '_blank' === target ) {
+								window.open( href );
+							} else {
+								setTimeout(
+									function () {
+										document.location.href = href;
+									},
+									2000
+								);
+							}
 						} else {
 							track_element( options );
 							console.log( 'Click without link' );

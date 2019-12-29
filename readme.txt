@@ -4,7 +4,7 @@ Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vlontakte, metrika, gtag, analytics, tracker, events
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 1.2
+Stable tag: 1.2.1
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -17,6 +17,7 @@ Simple but extremely useful Elementor addon that allows you to track events and 
 
 ### ✅ For now, you can track ###
 - Button widget click
+- Icon List widget click
 - Image widget click
 - Heading widget click
 - Form widget submit
@@ -27,7 +28,6 @@ Simple but extremely useful Elementor addon that allows you to track events and 
 - Pricing Table widget
 - Flipbox widget
 - Media Carousel widget
-- Icon List widget
 - Icon Box widget
 - Image Box widget
 - Icon
@@ -122,6 +122,11 @@ You're welcome to create new issue in our [support forum](https://wordpress.org/
 6. Tracking codes and pixels insertion
 
 == Changelog ==
+
+= 1.2.1 (29.12.2019) =
+* Added Icon List to tracking
+* Fixed bug with target="_blank" for Button
+
 = 1.2 (05.12.2019) =
 * Added Google Tag Manager tracking
 

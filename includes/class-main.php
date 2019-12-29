@@ -17,7 +17,7 @@ class Main {
 	/**
 	 * @var array $allowed_widget Array of allowed widgets to tracking.
 	 */
-	private $allowed_widget = array( 'button', 'form', 'heading', 'image' );
+	private $allowed_widget = array( 'button', 'form', 'heading', 'image', 'icon-list' );
 
 	/**
 	 * Main constructor.
@@ -42,6 +42,8 @@ class Main {
 		add_action( 'elementor/element/form/section_form_options/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/heading/section_title/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/image/section_image/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+		add_action( 'elementor/element/icon-list/section_icon_list/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+
 		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ) );
 		add_action( 'elementor/frontend/before_enqueue_scripts', array( $this, 'enqueue_scripts' ), 9 );
 		add_action( 'wp_footer', [ $this, 'add_tracker_code_to_footer' ] );
