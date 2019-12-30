@@ -93,6 +93,20 @@ class Options {
 							],
 						],
 					],
+
+					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_gtm' => [
+						'label'  => __( 'Google Tag Manager', 'events-tracker-for-elementor' ),
+						'fields' => [
+							WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_gtm_id' => [
+								'label'      => __( 'GTM ID', 'events-tracker-for-elementor' ),
+								'field_args' => [
+									'type' => 'text',
+									'desc' => __( 'See Google Tag Manager <a href="https://developers.google.com/tag-manager/quickstart" target="_blank">Quick Start Guide</a>' ),
+								],
+							],
+						],
+					],
+
 					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_facebook' => [
 						'label'  => __( 'Facebook Pixel', 'events-tracker-for-elementor' ),
 						'fields' => [
