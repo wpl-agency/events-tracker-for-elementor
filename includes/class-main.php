@@ -102,15 +102,15 @@ class Main {
 	 */
 	public function add_tracker_code_to_footer() {
 		$vkontakte_pixel_id       = $this->get_option( 'vkontakte_pixel_id' );
-		$yandex_metrika_code_type = $this->get_option( 'yandex_metrika_code_type' );
+		$yandex_metrika_code_type = (array) $this->get_option( 'yandex_metrika_code_type' );
 		$yandex_metrika_id        = $this->get_option( 'yandex_metrika_id' );
 		$facebook_pixel_id        = $this->get_option( 'facebook_pixel_id' );
 		$gtag_id                  = $this->get_option( 'gtag_id' );
-		$gtag_code_type           = $this->get_option( 'gtag_code_type' );
+		$gtag_code_type           = (array) $this->get_option( 'gtag_code_type' );
 		$adwords_id               = $this->get_option( 'adwords_id' );
-		$adwords_code_type        = $this->get_option( 'adwords_code_type' );
+		$adwords_code_type        = (array) $this->get_option( 'adwords_code_type' );
 		$analytics_id             = $this->get_option( 'analytics_id' );
-		$analytics_code_type      = $this->get_option( 'analytics_code_type' );
+		$analytics_code_type      = (array) $this->get_option( 'analytics_code_type' );
 
 		if ( $vkontakte_pixel_id ) {
 			?>

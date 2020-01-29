@@ -4,7 +4,7 @@ Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vlontakte, metrika, gtag, analytics, tracker, events
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -123,6 +123,12 @@ You're welcome to create new issue in our [support forum](https://wordpress.org/
 6. Tracking codes and pixels insertion
 
 == Changelog ==
+
+= 1.2.3 (28.01.2020) =
+* Fixed bug with Yandex tracking code
+* Fixed bug with gtag tracking code
+* Fixed bug with adwords tracking code
+* Fixed bug with analytics tracking code
 
 = 1.2.2 (30.12.2019) =
 * Fixed bugs with GTM
