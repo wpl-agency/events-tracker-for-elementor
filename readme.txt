@@ -4,7 +4,7 @@ Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vlontakte, metrika, gtag, analytics, tracker, events
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -112,6 +112,9 @@ No. You can use any tracking or pixel code insertion method. Nevermind yours or 
 
 You're welcome to create new issue in our [support forum](https://wordpress.org/support/plugin/events-tracker-for-elementor/) and say something about your idea
 
+= How to exclude links or forms from tracking? =
+
+Add class `events-tracker-for-elementor-exclude` for forms or links
 
 == Screenshots ==
 
@@ -123,6 +126,9 @@ You're welcome to create new issue in our [support forum](https://wordpress.org/
 6. Tracking codes and pixels insertion
 
 == Changelog ==
+
+= 1.2.4 (12.02.2020) =
+* Added class `events-tracker-for-elementor-exclude` for exclude forms and links from tracking
 
 = 1.2.3 (28.01.2020) =
 * Fixed bug with Yandex tracking code
