@@ -8,7 +8,7 @@
 				$( document ).on(
 					// Buttons, headings, images.
 					'click',
-					'[data-wpl_tracker] a',
+					'[data-wpl_tracker] a:not(.events-tracker-for-elementor-exclude)',
 					function ( event ) {
 						var $link    = $( this ),
 							href     = $link.attr( 'href' ),
@@ -50,7 +50,7 @@
 				$( document ).on(
 					// Forms.
 					'submit_success',
-					'[data-wpl_tracker] form',
+					'[data-wpl_tracker] form:not(.events-tracker-for-elementor-exclude)',
 					function ( event ) {
 						var $form   = $( this ),
 							options = $form.parents( '.events-tracker-for-elementor' ).data( 'wpl_tracker' );
