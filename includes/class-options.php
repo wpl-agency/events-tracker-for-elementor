@@ -61,7 +61,7 @@ class Options {
 									'desc' => __( 'Learn where to find <a href="https://support.google.com/google-ads/thread/1449693?hl=en" target="_blank">Google Ads Conversion ID</a>' ),
 								],
 							],
-							WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_adwords_code_type' => [
+							/*WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_adwords_code_type' => [
 								'label'      => '',
 								'field_args' => [
 									'type'    => 'checkbox_list',
@@ -69,7 +69,7 @@ class Options {
 										'tracking' => __( 'Add adwords simple tracking code', 'events-tracker-for-elementor' ),
 									],
 								],
-							],
+							],*/
 						],
 					],
 					WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_analytics' => [

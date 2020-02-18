@@ -7,6 +7,8 @@ namespace WPL\Events_Tracker_For_Elementor;
 use Elementor\Controls_Manager;
 use Elementor\Element_Base;
 use Elementor\Widget_Base;
+use Elementor\Plugin;
+//use ElementorPro\Plugin;
 
 class Main {
 	/**
@@ -49,6 +51,49 @@ class Main {
 		add_action( 'wp_footer', [ $this, 'add_tracker_code_to_footer' ] );
 		add_action( 'wp_head', [ $this, 'add_tracker_code_to_header' ] );
 		add_action( 'wp_body_open', [ $this, 'add_tracker_code_to_body' ] );
+
+		$a = [];
+
+		add_action( 'elementor/element/icon-list/section_icon_list/before_section_end__', function ( Widget_Base $widget ) {
+			$elementor   = Plugin::instance();
+			$widget_name = $widget->get_name();
+
+			$control_data = $elementor->controls_manager->get_control_from_stack( $widget_name, 'icon_list' );
+
+			if ( is_wp_error( $control_data ) ) {
+				return;
+			}
+
+			$controls = [
+				'masked'         =>
+					[
+						'name'  => 'events_tracker_for_elementor_vkontakte',
+						'label' => __( 'VK', 'masked-input-for-elementor' ),
+						'type'  => Controls_Manager::SWITCHER,
+						'tab'   => 'advanced',
+					],
+				'masked_type'    =>
+					[
+						'name'       => 'events_tracker_for_elementor_vkontakte_event_name',
+						'label'      => __( 'Event Name', 'masked-input-for-elementor' ),
+						'type'       => Controls_Manager::TEXT,
+						'default'    => '',
+						'conditions' => [
+							'terms' => [
+								[
+									'name'     => 'events_tracker_for_elementor_vkontakte',
+									'operator' => '==',
+									'value'    => 'yes',
+								],
+							],
+						],
+					],
+			];
+
+			$control_data['fields'] = array_merge( $control_data['fields'], $controls );
+
+			$elementor->controls_manager->update_control_in_stack( $widget, 'icon_list', $control_data );
+		} );
 	}
 
 	/**
@@ -178,7 +223,7 @@ class Main {
 			<?php
 		}
 
-		if ( $adwords_id && in_array( 'tracking', $adwords_code_type ) ) {
+		if ( $adwords_id ) {
 			?>
 			<!-- Global site tag (gtag.js) - Google Analytics -->
 			<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $gtag_id ); ?>"></script>
@@ -220,6 +265,7 @@ class Main {
 
 	/**
 	 * Add new Events Tracking section to buttons/forms
+	 *
 	 * @param Element_Base $element
 	 * @param array $args
 	 */
@@ -617,7 +663,7 @@ class Main {
 
 			$settings     = $data['settings'];
 			$attr         = array();
-			$has_tracking = false;
+			$has_tracking = false;// var_dump(array_keys($settings));var_dump(array_key_exists('events_tracker_for_elementor_vkontakte', $settings));
 
 			// Vkontakte.
 			if ( isset( $settings['events_tracker_for_elementor_vkontakte'] ) ) {
@@ -661,6 +707,12 @@ class Main {
 				$attr['gtag_category'] = $settings['events_tracker_for_elementor_gtag_category'];
 				$attr['gtag_action']   = $settings['events_tracker_for_elementor_gtag_action'];
 				$attr['gtag_label']    = $settings['events_tracker_for_elementor_gtag_label'];
+			}
+
+			// Google Tag Manager (gtm).
+			if ( isset( $settings['events_tracker_for_elementor_gtm'] ) ) {
+				$has_tracking = true;
+				$attr['gtm']  = true;
 			}
 
 			// Google Adwords Conversion (gtag).
