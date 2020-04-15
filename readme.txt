@@ -4,7 +4,7 @@ Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vlontakte, metrika, gtag, analytics, tracker, events
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 1.2.5
+Stable tag: 1.2.6
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -126,6 +126,9 @@ Add class `events-tracker-for-elementor-exclude` for forms or links
 6. Tracking codes and pixels insertion
 
 == Changelog ==
+
+= 1.2.6 (15.04.2020) =
+* Fixed bug with redirect to page 404 when opening a popup via button
 
 = 1.2.5 (18.02.2020) =
 * Fixed bug with Adwords tracking code inserted with GTM
