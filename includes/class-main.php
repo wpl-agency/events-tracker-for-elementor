@@ -521,7 +521,7 @@ class Main {
 		$element->add_control(
 			'events_tracker_for_elementor_gtm',
 			array(
-				'label'       => esc_html__( 'Track with Google Tag Manager)', 'events-tracker-for-elementor' ),
+				'label'       => esc_html__( 'Track with Google Tag Manager', 'events-tracker-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
 				'render_type' => 'none',
 			)
