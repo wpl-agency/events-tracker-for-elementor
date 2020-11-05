@@ -185,7 +185,7 @@ class Main {
 
 				ym(<?php echo esc_js( $yandex_metrika_id ); ?>, "init", <?php echo json_encode( $yandex_metrika_config ); ?>);
 			</script>
-			<noscript><div><img src="https://mc.yandex.ru/watch/5695870" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+			<noscript><div><img src="https://mc.yandex.ru/watch/<?php echo esc_js( $yandex_metrika_id ); ?>" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 			<!-- /Yandex.Metrika counter -->
 			<?php
 		}
