@@ -19,7 +19,7 @@ class Main {
 	/**
 	 * @var array $allowed_widget Array of allowed widgets to tracking.
 	 */
-	private $allowed_widget = array( 'button', 'form', 'heading', 'image', 'icon-list' );
+	private $allowed_widget = array( 'button', 'form', 'heading', 'image', 'icon-list', 'call-to-action' );
 
 	/**
 	 * Main constructor.
@@ -45,6 +45,7 @@ class Main {
 		add_action( 'elementor/element/heading/section_title/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/image/section_image/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/icon-list/section_icon_list/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+		add_action( 'elementor/element/call-to-action/section_ribbon/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 
 		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ) );
 		add_action( 'elementor/frontend/before_enqueue_scripts', array( $this, 'enqueue_scripts' ), 9 );
@@ -663,7 +664,7 @@ class Main {
 
 			$settings     = $data['settings'];
 			$attr         = array();
-			$has_tracking = false;// var_dump(array_keys($settings));var_dump(array_key_exists('events_tracker_for_elementor_vkontakte', $settings));
+			$has_tracking = false;
 
 			// Vkontakte.
 			if ( isset( $settings['events_tracker_for_elementor_vkontakte'] ) ) {
