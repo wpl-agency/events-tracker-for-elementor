@@ -19,7 +19,15 @@ class Main {
 	/**
 	 * @var array $allowed_widget Array of allowed widgets to tracking.
 	 */
-	private $allowed_widget = array( 'button', 'form', 'heading', 'image', 'icon-list', 'call-to-action' );
+	private $allowed_widget = array(
+		'button',
+		'form',
+		'heading',
+		'image',
+		'icon-list',
+		'call-to-action',
+		'price-table',
+	);
 
 	/**
 	 * Main constructor.
@@ -46,6 +54,7 @@ class Main {
 		add_action( 'elementor/element/image/section_image/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/icon-list/section_icon_list/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 		add_action( 'elementor/element/call-to-action/section_ribbon/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+		add_action( 'elementor/element/price-table/section_ribbon/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
 
 		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ) );
 		add_action( 'elementor/frontend/before_enqueue_scripts', array( $this, 'enqueue_scripts' ), 9 );

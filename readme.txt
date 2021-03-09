@@ -3,8 +3,8 @@ Contributors: wplagency, mihdan, donatory
 Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vlontakte, metrika, gtag, analytics, tracker, events
 Requires at least: 5.0
-Tested up to: 5.5
-Stable tag: 1.2.8
+Tested up to: 5.7
+Stable tag: 1.2.9
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -16,6 +16,7 @@ Track Click or Submit events and conversions for any Elementor widget with Googl
 Simple but extremely useful Elementor addon that allows you to track events and conversions on your website, that made with our favorite page builder. All you need is turn necessary toggle(s) on and you're in business 😎
 
 ### ✅ For now, you can track ###
+- Pricing Table widget ‼️
 - Call To Action widget
 - Button widget click
 - Icon List widget click
@@ -25,7 +26,6 @@ Simple but extremely useful Elementor addon that allows you to track events and 
 
 #### ⏳ Coming soon ####
 - Slider widget
-- Pricing Table widget
 - Flipbox widget
 - Media Carousel widget
 - Icon Box widget
@@ -126,6 +126,11 @@ Add class `events-tracker-for-elementor-exclude` for forms or links
 6. Tracking codes and pixels insertion
 
 == Changelog ==
+
+= 1.2.9 (10.03.2021) =
+* Added support for WordPress 5.7
+* Added Pricing Table widget to tracking
+* Fixed tons of bugs
 
 = 1.2.8 (18.01.2021) =
 * Added Call to Action to tracking
