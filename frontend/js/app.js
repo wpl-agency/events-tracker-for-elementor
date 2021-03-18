@@ -57,10 +57,10 @@
 				$( document ).on(
 					// Forms.
 					'submit_success',
-					'[data-wpl_tracker] form:not(.events-tracker-for-elementor-exclude)',
+					'form[data-wpl_tracker]:not(.events-tracker-for-elementor-exclude)',
 					function ( event ) {
 						var $form   = $( this ),
-							options = $form.parents( '.events-tracker-for-elementor' ).data( 'wpl_tracker' );
+							options = $form.data( 'wpl_tracker' );
 
 						track_element( options );
 						console.log( 'Submit success' );

@@ -62,6 +62,9 @@ class Main {
 		add_action( 'wp_head', [ $this, 'add_tracker_code_to_header' ] );
 		add_action( 'wp_body_open', [ $this, 'add_tracker_code_to_body' ] );
 
+		add_filter( 'plugin_action_links', [ $this, 'add_settings_link' ], 10, 2 );
+		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 999 );
+
 		$a = [];
 
 		add_action( 'elementor/element/icon-list/section_icon_list/before_section_end__', function ( Widget_Base $widget ) {
@@ -104,6 +107,55 @@ class Main {
 
 			$elementor->controls_manager->update_control_in_stack( $widget, 'icon_list', $control_data );
 		} );
+	}
+
+	/**
+	 * Add plugin action links
+	 *
+	 * @param array $actions
+	 * @param string $plugin_file
+	 *
+	 * @return array
+	 */
+	public function add_settings_link( $actions, $plugin_file ) {
+		if ( 'events-tracker-for-elementor/events-tracker-for-elementor.php' === $plugin_file ) {
+			$actions[] = sprintf(
+				'<a href="%s">%s</a>',
+				admin_url( 'admin.php?page=elementor#tab-events_tracker_for_elementor' ),
+				esc_html__( 'Settings', 'events-tracker-for-elementor' )
+			);
+			$actions[] = sprintf(
+				'<a href="%s" target="_blank">%s</a>',
+				esc_url( 'https://www.kobzarev.com/donate/' ),
+				esc_html__( 'Donate', 'events-tracker-for-elementor' )
+			);
+		}
+
+		return $actions;
+	}
+
+	/**
+	 * Add admin footer text.
+	 *
+	 * @param string $text Default text.
+	 *
+	 * @return string
+	 */
+	public function admin_footer_text( $text ) {
+
+		$current_screen = get_current_screen();
+
+		$white_list = array(
+			'toplevel_page_elementor',
+		);
+
+		if ( isset( $current_screen ) && in_array( $current_screen->id, $white_list ) ) {
+			$text = '<span class="mytf-admin-footer-text">';
+			$text .= sprintf( __( 'Enjoyed <strong>Events Tracker For Elementor</strong>? Please leave us a <a href="%s" target="_blank" title="Rate & review it">★★★★★</a> rating. We really appreciate your support', 'events-tracker-for-elementor' ), 'https://wordpress.org/support/plugin/events-tracker-for-elementor/reviews/#new-post' );
+			$text .= '</span>';
+		}
+
+		return  $text;
 	}
 
 	/**
@@ -737,7 +789,7 @@ class Main {
 
 			if ( $has_tracking ) {
 				$element->add_render_attribute(
-					'_wrapper',
+					( 'form' === $name ) ? 'form' : '_wrapper',
 					array(
 						'data-wpl_tracker' => json_encode( $attr ),
 						'class'            => 'events-tracker-for-elementor',
