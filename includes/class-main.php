@@ -6,9 +6,8 @@ namespace WPL\Events_Tracker_For_Elementor;
 
 use Elementor\Controls_Manager;
 use Elementor\Element_Base;
-use Elementor\Widget_Base;
 use Elementor\Plugin;
-//use ElementorPro\Plugin;
+use Elementor\Widget_Base;
 
 class Main {
 	/**
@@ -17,17 +16,39 @@ class Main {
 	private $options;
 
 	/**
-	 * @var array $allowed_widget Array of allowed widgets to tracking.
+	 * @var array $allowed_widgets Array of allowed widgets to tracking.
 	 */
-	private $allowed_widget = array(
-		'button',
-		'form',
-		'heading',
-		'image',
-		'icon-list',
-		'call-to-action',
-		'price-table',
-	);
+	private $allowed_widgets = [
+		'button'         => [
+			'section' => 'section_button',
+			'element' => '_wrapper',
+		],
+		'call-to-action' => [
+			'section' => 'section_ribbon',
+			'element' => '_wrapper',
+		],
+		'form'           => [
+			'section' => 'section_form_options',
+			'element' => 'form',
+		],
+		'heading'        => [
+			'section' => 'section_title',
+			'element' => '_wrapper',
+		],
+		'image'          => [
+			'section' => 'section_image',
+			'element' => '_wrapper',
+		],
+		'price-table'    => [
+			'section' => 'section_ribbon',
+			'element' => '_wrapper',
+		],
+		'icon-list'      => [
+			'section' => 'section_icon_list',
+			'element' => 'link_%index%',
+			'control' => 'icon_list',
+		],
+	];
 
 	/**
 	 * Main constructor.
@@ -41,20 +62,37 @@ class Main {
 			$this->options = new Options();
 		}
 
-		$this->hooks();
+		$this->allowed_widgets = apply_filters( 'wpl/events-tracker-for-elementor/allowed-widgets', $this->allowed_widgets );
+
+		do_action( 'wpl/events-tracker-for-elementor/init', $this );
+	}
+
+	/**
+	 * Get allowed widgets.
+	 *
+	 * @return array
+	 */
+	public function get_allowed_widgets() {
+		return $this->allowed_widgets;
 	}
 
 	/**
 	 * Register hooks
+	 *
+	 * @return void
 	 */
-	public function hooks() {
-		add_action( 'elementor/element/button/section_button/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
-		add_action( 'elementor/element/form/section_form_options/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
-		add_action( 'elementor/element/heading/section_title/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
-		add_action( 'elementor/element/image/section_image/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
-		add_action( 'elementor/element/icon-list/section_icon_list/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
-		add_action( 'elementor/element/call-to-action/section_ribbon/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
-		add_action( 'elementor/element/price-table/section_ribbon/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+	public function setup_hooks() {
+
+		if ( is_array( $this->get_allowed_widgets() ) ) {
+			foreach ( $this->get_allowed_widgets() as $widget => $hook ) {
+				// Repeaters.
+				if ( isset( $hook['control'] ) ) {
+					add_action( 'elementor/element/' . $widget . '/' . $hook['section'] . '/before_section_end', array( $this, 'add_tracking_controls_for_repeaters' )  );
+				} else {
+					add_action( 'elementor/element/' . $widget . '/' . $hook['section'] . '/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+				}
+			}
+		}
 
 		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ) );
 		add_action( 'elementor/frontend/before_enqueue_scripts', array( $this, 'enqueue_scripts' ), 9 );
@@ -64,49 +102,79 @@ class Main {
 
 		add_filter( 'plugin_action_links', [ $this, 'add_settings_link' ], 10, 2 );
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 999 );
+	}
 
-		$a = [];
+	public function add_tracking_controls_for_repeaters( Widget_Base $widget ) {
+		$elementor   = Plugin::instance()->controls_manager;
+		$widget_name = $widget->get_unique_name();
+		$all_widgets = $this->get_allowed_widgets();
+		$control_id  = $all_widgets[ $widget_name ]['control'];
 
-		add_action( 'elementor/element/icon-list/section_icon_list/before_section_end__', function ( Widget_Base $widget ) {
-			$elementor   = Plugin::instance();
-			$widget_name = $widget->get_name();
+		$control_data = $elementor->get_control_from_stack( $widget_name, $control_id );
 
-			$control_data = $elementor->controls_manager->get_control_from_stack( $widget_name, 'icon_list' );
+//			$widget->start_controls_section(
+//				'events_tracker_for_elementoreeeeee',
+//				array(
+//					'label' => esc_html__( 'Events Tracking', 'events-tracker-for-elementor' ),
+//					'tab'   => Controls_Manager::TAB_CONTENT,
+//				)
+//			);
 
-			if ( is_wp_error( $control_data ) ) {
-				return;
-			}
+	//	error_log( json_encode( $control_data ) );
 
-			$controls = [
-				'masked'         =>
-					[
-						'name'  => 'events_tracker_for_elementor_vkontakte',
-						'label' => __( 'VK', 'masked-input-for-elementor' ),
-						'type'  => Controls_Manager::SWITCHER,
-						'tab'   => 'advanced',
-					],
-				'masked_type'    =>
-					[
-						'name'       => 'events_tracker_for_elementor_vkontakte_event_name',
-						'label'      => __( 'Event Name', 'masked-input-for-elementor' ),
-						'type'       => Controls_Manager::TEXT,
-						'default'    => '',
-						'conditions' => [
-							'terms' => [
-								[
-									'name'     => 'events_tracker_for_elementor_vkontakte',
-									'operator' => '==',
-									'value'    => 'yes',
-								],
+		if ( is_wp_error( $control_data ) ) {
+			return;
+		}
+
+		$controls = [
+			'кцукцукцу'         =>
+				[
+					'name'  => 'events_tracker_for_elementor_vkontaktee',
+					'label' => __( 'Events Tracking', 'masked-input-for-elementor' ),
+					'type'  => Controls_Manager::HEADING,
+					'tab'   => 'events',
+				],
+			'masked'         =>
+				[
+					'name'  => 'events_tracker_for_elementor_vkontakte',
+					'label' => __( 'VK', 'masked-input-for-elementor' ),
+					'type'  => Controls_Manager::SWITCHER,
+					'tab'   => 'events',
+				],
+			'maskeed'         =>
+				[
+					'name'  => 'events_tracker_for_elementor_vkontakteeeee',
+					'label' => __( 'Yandex', 'masked-input-for-elementor' ),
+					'type'  => Controls_Manager::SWITCHER,
+					'tab'   => 'events',
+				],
+			'masked_type'    =>
+				[
+					'name'       => 'events_tracker_for_elementor_vkontakte_event_name',
+					'label'      => __( 'Event Name', 'masked-input-for-elementor' ),
+					'type'       => Controls_Manager::TEXT,
+					'default'    => '',
+					'conditions' => [
+						'terms' => [
+							[
+								'name'     => 'events_tracker_for_elementor_vkontakte',
+								'operator' => '==',
+								'value'    => 'yes',
 							],
 						],
 					],
-			];
+				],
+		];
 
-			$control_data['fields'] = array_merge( $control_data['fields'], $controls );
+		//$control_data
 
-			$elementor->controls_manager->update_control_in_stack( $widget, 'icon_list', $control_data );
-		} );
+		$control_data['fields'] = array_merge( $control_data['fields'], $controls );
+
+		$elementor->update_control_in_stack( $widget, $control_id, $control_data );
+	}
+
+	public function is_pro_active() {
+		return did_action( 'wpl/advanced-events-tracker-for-elementor/init' );
 	}
 
 	/**
@@ -124,11 +192,14 @@ class Main {
 				admin_url( 'admin.php?page=elementor#tab-events_tracker_for_elementor' ),
 				esc_html__( 'Settings', 'events-tracker-for-elementor' )
 			);
-			$actions[] = sprintf(
-				'<a href="%s" target="_blank">%s</a>',
-				esc_url( 'https://www.kobzarev.com/donate/' ),
-				esc_html__( 'Donate', 'events-tracker-for-elementor' )
-			);
+
+			if ( ! $this->is_pro_active() ) {
+				$actions[] = sprintf(
+					'<a href="%s" target="_blank" style="color: #93003c; font-weight: bold">%s</a>',
+					esc_url( 'https://wpl.agency/product/advanced-events-tracker-for-elementor/' ),
+					esc_html__( 'Go Pro', 'events-tracker-for-elementor' )
+				);
+			}
 		}
 
 		return $actions;
@@ -719,11 +790,20 @@ class Main {
 
 		$name = $element->get_name();
 
-		if ( in_array( $name, $this->allowed_widget ) ) {
+		//foreach ( $element->get_settings_for_display( 'social_icon_list' ) as $index => $item ) {
+		//	$link_key = 'link_' . $index;
+///
+	//		$element->add_render_attribute( $link_key, 'class', 'one' );
+	//	}
+
+
+
+
+		if ( isset( $this->allowed_widgets[ $name ] ) ) {
 
 			$data = $element->get_data();
 
-			$settings     = $data['settings'];
+			$settings     = $data['settings']; print_r($settings);
 			$attr         = array();
 			$has_tracking = false;
 
@@ -789,7 +869,7 @@ class Main {
 
 			if ( $has_tracking ) {
 				$element->add_render_attribute(
-					( 'form' === $name ) ? 'form' : '_wrapper',
+					$this->allowed_widgets[ $name ]['element'],
 					array(
 						'data-wpl_tracker' => json_encode( $attr ),
 						'class'            => 'events-tracker-for-elementor',

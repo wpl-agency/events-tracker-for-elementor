@@ -5,8 +5,10 @@
 		$(
 			function ( $ ) {
 
+				/**
+				 * Buttons, headings, images.
+				 */
 				$( document ).on(
-					// Buttons, headings, images.
 					'click',
 					'[data-wpl_tracker] a:not(.events-tracker-for-elementor-exclude)',
 					function ( event ) {
@@ -54,8 +56,10 @@
 					}
 				);
 
+				/**
+				 * Forms, global forms.
+				 */
 				$( document ).on(
-					// Forms.
 					'submit_success',
 					'form[data-wpl_tracker]:not(.events-tracker-for-elementor-exclude)',
 					function ( event ) {
@@ -64,6 +68,20 @@
 
 						track_element( options );
 						console.log( 'Submit success' );
+					}
+				);
+
+				/**
+				 * Paypal Button.
+				 */
+				$( document ).on(
+					'click',
+					'button[data-wpl_tracker].elementor-payment-button',
+					function ( e ) {
+						const $button = $( this );
+
+						track_element( $button.data( 'wpl_tracker' ) );
+						console.log( 'Paypal success' );
 					}
 				);
 
