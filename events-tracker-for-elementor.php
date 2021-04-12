@@ -46,6 +46,7 @@ function wpl_events_tracker_for_elementor() {
 		return;
 	}
 
+	require_once __DIR__ . '/includes/class-utils.php';
 	require_once __DIR__ . '/includes/class-options.php';
 	require_once __DIR__ . '/includes/class-main.php';
 
