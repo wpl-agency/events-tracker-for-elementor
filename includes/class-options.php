@@ -13,6 +13,22 @@ class Options {
 
 	public function hooks() {
 		add_action( 'elementor/admin/after_create_settings/elementor', [ $this, 'register_settings' ] );
+		add_action( 'admin_footer', [ $this, 'add_pro_banner' ] );
+	}
+
+	public function add_pro_banner() {
+		if ( Utils::is_pro_actived() ) {
+			return;
+		}
+		?>
+		<script>
+			jQuery( function ( $ ) {
+				const $container = $( '#tab-events_tracker_for_elementor' );
+
+				$container.prepend( '<div style="background-color: #fff; border-left: 4px solid #0A5EF2; box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25); padding: 20px 20px; max-width: 600px; margin-bottom: 40px; font-size: 15px; line-height: 18px;"><div style="font-weight: bold; font-size: 16px; margin-bottom: 10px;">Want to squeeze extra from your marketing?</div>Track more with <a href="https://wpl.agency/events-tracker-for-elementor/?utm_source=plugin&utm_medium=banner&utm_campaign=tracker_advanced&utm_content=settings" target="_blank"><u>Events Tracker for Elementor Advanced</u></a></div>');
+			} );
+		</script>
+		<?php
 	}
 
 	/**
