@@ -5,6 +5,7 @@
 namespace WPL\Events_Tracker_For_Elementor;
 
 use Elementor\Controls_Manager;
+use Elementor\Controls_Stack;
 use Elementor\Element_Base;
 use Elementor\Plugin;
 use Elementor\Widget_Base;
@@ -50,6 +51,14 @@ class Main {
 		],
 	];
 
+	private $advanced_widgets = [
+		'flip-box'      => [ 'section' => 'section_box_settings', 'element' => '_wrapper' ],
+		'image-box'     => [ 'section' => 'section_image', 'element' => '_wrapper' ],
+		'icon'          => [ 'section' => 'section_icon', 'element' => '_wrapper' ],
+		'icon-box'      => [ 'section' => 'section_icon', 'element' => '_wrapper' ],
+		'paypal-button' => [ 'section' => 'section_settings', 'element' => 'button' ],
+	];
+
 	/**
 	 * Main constructor.
 	 *
@@ -77,6 +86,15 @@ class Main {
 	}
 
 	/**
+	 * Get advanced widgets.
+	 *
+	 * @return array
+	 */
+	public function get_advanced_widgets() {
+		return $this->advanced_widgets;
+	}
+
+	/**
 	 * Register hooks
 	 *
 	 * @return void
@@ -94,6 +112,12 @@ class Main {
 			}
 		}
 
+		if ( is_array( $this->get_advanced_widgets() ) ) {
+			foreach ( $this->get_advanced_widgets() as $widget => $hook ) {
+				add_action( 'elementor/element/' . $widget . '/' . $hook['section'] . '/after_section_end', array( $this, 'add_pro_section' ), 10, 2 );
+			}
+		}
+
 		add_action( 'elementor/widget/before_render_content', array( $this, 'before_render' ) );
 		add_action( 'elementor/frontend/before_enqueue_scripts', array( $this, 'enqueue_scripts' ), 9 );
 		add_action( 'wp_footer', [ $this, 'add_tracker_code_to_footer' ] );
@@ -102,6 +126,33 @@ class Main {
 
 		add_filter( 'plugin_action_links', [ $this, 'add_settings_link' ], 10, 2 );
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 999 );
+	}
+
+	public function add_pro_section( Controls_Stack $element, $section_id ) {
+
+		if ( Utils::is_pro_actived() ) {
+			return;
+		}
+
+		$element->start_controls_section(
+			'events_tracker_for_elementor_advanced_section_go_advanced',
+			array(
+				'label' => esc_html__( 'Events Tracking', 'events-tracker-for-elementor' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			)
+		);
+
+		$element->add_control(
+			'events_tracker_for_elementor_advanced_go_advanced',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => '<div style="text-align: center; font-size: 11px; line-height: 18px;"><b style="font-size: 12px">Want to squeeze extra from your marketing?</b><br>Track more with <a href="https://wpl.agency/events-tracker-for-elementor/?utm_source=plugin&utm_medium=banner&utm_campaign=tracker_advanced&utm_content=spoiler" target="_blank" style="color: #0A5EF2; font-weight: bold">advanced version</a></div>',
+				'render_type' => 'none',
+				'show_label'  => false,
+			)
+		);
+
+		$element->end_controls_section();
 	}
 
 	public function add_tracking_controls_for_repeaters( Widget_Base $widget ) {
@@ -173,10 +224,6 @@ class Main {
 		$elementor->update_control_in_stack( $widget, $control_id, $control_data );
 	}
 
-	public function is_pro_active() {
-		return did_action( 'wpl/advanced-events-tracker-for-elementor/init' );
-	}
-
 	/**
 	 * Add plugin action links
 	 *
@@ -193,11 +240,11 @@ class Main {
 				esc_html__( 'Settings', 'events-tracker-for-elementor' )
 			);
 
-			if ( ! $this->is_pro_active() ) {
+			if ( ! Utils::is_pro_actived() ) {
 				$actions[] = sprintf(
-					'<a href="%s" target="_blank" style="color: #93003c; font-weight: bold">%s</a>',
-					esc_url( 'https://wpl.agency/product/advanced-events-tracker-for-elementor/' ),
-					esc_html__( 'Go Pro', 'events-tracker-for-elementor' )
+					'<a href="%s" target="_blank" style="color: #0A5EF2; font-weight: bold">%s</a>',
+					esc_url( 'https://wpl.agency/events-tracker-for-elementor/?utm_source=plugin&utm_medium=link&utm_campaign=tracker_advanced&utm_content=plugins_list' ),
+					esc_html__( 'Go Advanced', 'events-tracker-for-elementor' )
 				);
 			}
 		}
