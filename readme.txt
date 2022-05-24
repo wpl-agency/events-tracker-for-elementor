@@ -3,7 +3,7 @@ Contributors: wplagency, mihdan, donatory
 Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vlontakte, metrika, gtag, analytics, tracker, events
 Requires at least: 5.0
-Tested up to: 5.7
+Tested up to: 6.0
 Stable tag: 1.2.10
 Requires PHP: 5.6.20
 License: GPLv2 or later
@@ -129,8 +129,9 @@ Add class `events-tracker-for-elementor-exclude` for forms or links
 
 == Changelog ==
 
-= 1.2.10 (18.03.2021) =
+= 1.2.10 (24.05.2022) =
 * Added Global widgets to tracking
+* Tested with WordPress 6.0
 
 = 1.2.9 (10.03.2021) =
 * Added support for WordPress 5.7
