@@ -1,7 +1,10 @@
 <?php
 /**
+ * Main class.
+ *
  * @package events-tracker-for-elementor
  */
+
 namespace WPL\Events_Tracker_For_Elementor;
 
 use Elementor\Controls_Manager;
@@ -10,14 +13,21 @@ use Elementor\Element_Base;
 use Elementor\Plugin;
 use Elementor\Widget_Base;
 
+/**
+ * Main class.
+ */
 class Main {
 	/**
+	 * Options instance.
+	 *
 	 * @var Options $options
 	 */
 	private $options;
 
 	/**
-	 * @var array $allowed_widgets Array of allowed widgets to tracking.
+	 * Array of allowed widgets to tracking.
+	 *
+	 * @var array $allowed_widgets
 	 */
 	private $allowed_widgets = [
 		'button'         => [
@@ -51,29 +61,47 @@ class Main {
 		],
 	];
 
+	/**
+	 * Advanced widgets list.
+	 *
+	 * @var string[][] $advanced_widgets
+	 */
 	private $advanced_widgets = [
-		'flip-box'      => [ 'section' => 'section_box_settings', 'element' => '_wrapper' ],
-		'image-box'     => [ 'section' => 'section_image', 'element' => '_wrapper' ],
-		'icon'          => [ 'section' => 'section_icon', 'element' => '_wrapper' ],
-		'icon-box'      => [ 'section' => 'section_icon', 'element' => '_wrapper' ],
-		'paypal-button' => [ 'section' => 'section_settings', 'element' => 'button' ],
+		'flip-box'      => [
+			'section' => 'section_box_settings',
+			'element' => '_wrapper',
+		],
+		'image-box'     => [
+			'section' => 'section_image',
+			'element' => '_wrapper',
+		],
+		'icon'          => [
+			'section' => 'section_icon',
+			'element' => '_wrapper',
+		],
+		'icon-box'      => [
+			'section' => 'section_icon',
+			'element' => '_wrapper',
+		],
+		'paypal-button' => [
+			'section' => 'section_settings',
+			'element' => 'button',
+		],
 	];
 
 	/**
 	 * Main constructor.
 	 *
-	 * @param Options $options
+	 * @param Options $options Options instance.
+	 *
+	 * @return void
 	 */
-	public function __construct( $options = null ) {
+	public function __construct( Options $options ) {
 		$this->options = $options;
 
-		if ( ! $this->options ) {
-			$this->options = new Options();
-		}
+		$this->allowed_widgets = apply_filters( 'wpl/events_tracker_for_elementor/allowed_widgets', $this->allowed_widgets );
 
-		$this->allowed_widgets = apply_filters( 'wpl/events-tracker-for-elementor/allowed-widgets', $this->allowed_widgets );
-
-		do_action( 'wpl/events-tracker-for-elementor/init', $this );
+		do_action( 'wpl/events_tracker_for_elementor/init', $this );
 	}
 
 	/**
@@ -81,7 +109,7 @@ class Main {
 	 *
 	 * @return array
 	 */
-	public function get_allowed_widgets() {
+	public function get_allowed_widgets(): array {
 		return $this->allowed_widgets;
 	}
 
@@ -90,7 +118,7 @@ class Main {
 	 *
 	 * @return array
 	 */
-	public function get_advanced_widgets() {
+	public function get_advanced_widgets(): array {
 		return $this->advanced_widgets;
 	}
 
@@ -99,22 +127,44 @@ class Main {
 	 *
 	 * @return void
 	 */
-	public function setup_hooks() {
+	public function setup_hooks(): void {
 
 		if ( is_array( $this->get_allowed_widgets() ) ) {
 			foreach ( $this->get_allowed_widgets() as $widget => $hook ) {
 				// Repeaters.
 				if ( isset( $hook['control'] ) ) {
-					add_action( 'elementor/element/' . $widget . '/' . $hook['section'] . '/before_section_end', array( $this, 'add_tracking_controls_for_repeaters' )  );
+					add_action(
+						'elementor/element/' . $widget . '/' . $hook['section'] . '/before_section_end',
+						array(
+							$this,
+							'add_tracking_controls_for_repeaters',
+						)
+					);
 				} else {
-					add_action( 'elementor/element/' . $widget . '/' . $hook['section'] . '/after_section_end', array( $this, 'add_tracking_controls' ), 10, 2 );
+					add_action(
+						'elementor/element/' . $widget . '/' . $hook['section'] . '/after_section_end',
+						array(
+							$this,
+							'add_tracking_controls',
+						),
+						10,
+						2
+					);
 				}
 			}
 		}
 
 		if ( is_array( $this->get_advanced_widgets() ) ) {
 			foreach ( $this->get_advanced_widgets() as $widget => $hook ) {
-				add_action( 'elementor/element/' . $widget . '/' . $hook['section'] . '/after_section_end', array( $this, 'add_pro_section' ), 10, 2 );
+				add_action(
+					'elementor/element/' . $widget . '/' . $hook['section'] . '/after_section_end',
+					array(
+						$this,
+						'add_pro_section',
+					),
+					10,
+					2
+				);
 			}
 		}
 
@@ -128,6 +178,14 @@ class Main {
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 999 );
 	}
 
+	/**
+	 * Add pro section.
+	 *
+	 * @param Controls_Stack $element    Controls_Stack instance.
+	 * @param string         $section_id Section ID.
+	 *
+	 * @return void
+	 */
 	public function add_pro_section( Controls_Stack $element, $section_id ) {
 
 		if ( Utils::is_pro_actived() ) {
@@ -155,6 +213,13 @@ class Main {
 		$element->end_controls_section();
 	}
 
+	/**
+	 * Add tracking controls for repeaters.
+	 *
+	 * @param Widget_Base $widget Widget_Base instance.
+	 *
+	 * @return void
+	 */
 	public function add_tracking_controls_for_repeaters( Widget_Base $widget ) {
 		$elementor   = Plugin::instance()->controls_manager;
 		$widget_name = $widget->get_unique_name();
@@ -163,43 +228,33 @@ class Main {
 
 		$control_data = $elementor->get_control_from_stack( $widget_name, $control_id );
 
-//			$widget->start_controls_section(
-//				'events_tracker_for_elementoreeeeee',
-//				array(
-//					'label' => esc_html__( 'Events Tracking', 'events-tracker-for-elementor' ),
-//					'tab'   => Controls_Manager::TAB_CONTENT,
-//				)
-//			);
-
-	//	error_log( json_encode( $control_data ) );
-
 		if ( is_wp_error( $control_data ) ) {
 			return;
 		}
 
 		$controls = [
-			'кцукцукцу'         =>
+			'кцукцукцу'   =>
 				[
 					'name'  => 'events_tracker_for_elementor_vkontaktee',
 					'label' => __( 'Events Tracking', 'masked-input-for-elementor' ),
 					'type'  => Controls_Manager::HEADING,
 					'tab'   => 'events',
 				],
-			'masked'         =>
+			'masked'      =>
 				[
 					'name'  => 'events_tracker_for_elementor_vkontakte',
 					'label' => __( 'VK', 'masked-input-for-elementor' ),
 					'type'  => Controls_Manager::SWITCHER,
 					'tab'   => 'events',
 				],
-			'maskeed'         =>
+			'maskeed'     =>
 				[
 					'name'  => 'events_tracker_for_elementor_vkontakteeeee',
 					'label' => __( 'Yandex', 'masked-input-for-elementor' ),
 					'type'  => Controls_Manager::SWITCHER,
 					'tab'   => 'events',
 				],
-			'masked_type'    =>
+			'masked_type' =>
 				[
 					'name'       => 'events_tracker_for_elementor_vkontakte_event_name',
 					'label'      => __( 'Event Name', 'masked-input-for-elementor' ),
@@ -217,7 +272,7 @@ class Main {
 				],
 		];
 
-		//$control_data
+		// $control_data
 
 		$control_data['fields'] = array_merge( $control_data['fields'], $controls );
 
@@ -227,8 +282,8 @@ class Main {
 	/**
 	 * Add plugin action links
 	 *
-	 * @param array $actions
-	 * @param string $plugin_file
+	 * @param array  $actions     Array of actions.
+	 * @param string $plugin_file Plugin file.
 	 *
 	 * @return array
 	 */
@@ -267,20 +322,21 @@ class Main {
 			'toplevel_page_elementor',
 		);
 
-		if ( isset( $current_screen ) && in_array( $current_screen->id, $white_list ) ) {
+		if ( isset( $current_screen ) && in_array( $current_screen->id, $white_list, true ) ) {
 			$text = '<span class="mytf-admin-footer-text">';
+			// translators: Admin footer text.
 			$text .= sprintf( __( 'Enjoyed <strong>Events Tracker For Elementor</strong>? Please leave us a <a href="%s" target="_blank" title="Rate & review it">★★★★★</a> rating. We really appreciate your support', 'events-tracker-for-elementor' ), 'https://wordpress.org/support/plugin/events-tracker-for-elementor/reviews/#new-post' );
 			$text .= '</span>';
 		}
 
-		return  $text;
+		return $text;
 	}
 
 	/**
 	 * Get option value for plugin.
 	 *
-	 * @param string $key
-	 * @param bool   $default
+	 * @param string $key     Option name.
+	 * @param bool   $default Default value.
 	 *
 	 * @return mixed|void
 	 */
@@ -297,11 +353,19 @@ class Main {
 		if ( $gtm_id ) {
 			?>
 			<!-- Google Tag Manager -->
-			<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-						new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-					j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-					'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-				})(window,document,'script','dataLayer','<?php echo esc_js( $gtm_id ); ?>');</script>
+			<script>(function (w, d, s, l, i) {
+					w[l] = w[l] || [];
+					w[l].push({
+						'gtm.start':
+							new Date().getTime(), event: 'gtm.js'
+					});
+					var f = d.getElementsByTagName(s)[0],
+						j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+					j.async = true;
+					j.src =
+						'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+					f.parentNode.insertBefore(j, f);
+				})(window, document, 'script', 'dataLayer', '<?php echo esc_js( $gtm_id ); ?>');</script>
 			<!-- End Google Tag Manager -->
 			<?php
 		}
@@ -316,7 +380,10 @@ class Main {
 		if ( $gtm_id ) {
 			?>
 			<!-- Google Tag Manager (noscript) -->
-			<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo esc_js( $gtm_id ); ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+			<noscript>
+				<iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo esc_js( $gtm_id ); ?>" height="0"
+						width="0" style="display:none;visibility:hidden"></iframe>
+			</noscript>
 			<!-- End Google Tag Manager (noscript) -->
 			<?php
 		}
@@ -339,11 +406,17 @@ class Main {
 
 		if ( $vkontakte_pixel_id ) {
 			?>
-			<script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?162",t.onload=function(){VK.Retargeting.Init("<?php echo esc_js( $vkontakte_pixel_id ); ?>"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=<?php echo esc_js( $vkontakte_pixel_id ); ?>" style="position:fixed; left:-999px;" alt=""/></noscript>
+			<script type="text/javascript">!function () {
+					var t = document.createElement("script");
+					t.type = "text/javascript", t.async = !0, t.src = "https://vk.com/js/api/openapi.js?162", t.onload = function () {
+						VK.Retargeting.Init("<?php echo esc_js( $vkontakte_pixel_id ); ?>"), VK.Retargeting.Hit()
+					}, document.head.appendChild(t)
+				}();</script>
+			<noscript><img src="https://vk.com/rtrg?p=<?php echo esc_js( $vkontakte_pixel_id ); ?>" style="position:fixed; left:-999px;" alt=""/></noscript>
 			<?php
 		}
 
-		if ( $yandex_metrika_id && in_array( 'tracking', $yandex_metrika_code_type ) ) {
+		if ( $yandex_metrika_id && in_array( 'tracking', $yandex_metrika_code_type, true ) ) {
 			// Настройки метрики по умолчанию.
 			$yandex_metrika_config = array(
 				'clickmap'            => true,
@@ -353,19 +426,26 @@ class Main {
 			);
 
 			// Вебвизор, карта скроллинга, аналитика форм.
-			if ( in_array( 'webvisor', $yandex_metrika_code_type ) ) {
+			if ( in_array( 'webvisor', $yandex_metrika_code_type, true ) ) {
 				$yandex_metrika_config['webvisor'] = true;
 			}
 			?>
 			<!-- Yandex.Metrika counter -->
-			<script type="text/javascript" >
-				(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-					m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+			<script type="text/javascript">
+				(function (m, e, t, r, i, k, a) {
+					m[i] = m[i] || function () {
+						(m[i].a = m[i].a || []).push(arguments)
+					};
+					m[i].l = 1 * new Date();
+					k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+				})
 				(window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym");
 
-				ym(<?php echo esc_js( $yandex_metrika_id ); ?>, "init", <?php echo json_encode( $yandex_metrika_config ); ?>);
+				ym(<?php echo esc_js( $yandex_metrika_id ); ?>, "init", <?php echo wp_json_encode( $yandex_metrika_config ); ?>);
 			</script>
-			<noscript><div><img src="https://mc.yandex.ru/watch/<?php echo esc_js( $yandex_metrika_id ); ?>" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+			<noscript>
+				<div><img src="https://mc.yandex.ru/watch/<?php echo esc_js( $yandex_metrika_id ); ?>" style="position:absolute; left:-9999px;" alt=""/></div>
+			</noscript>
 			<!-- /Yandex.Metrika counter -->
 			<?php
 		}
@@ -374,29 +454,43 @@ class Main {
 			?>
 			<!-- Facebook Pixel Code -->
 			<script>
-				!function(f,b,e,v,n,t,s)
-				{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-					n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-					if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-					n.queue=[];t=b.createElement(e);t.async=!0;
-					t.src=v;s=b.getElementsByTagName(e)[0];
-					s.parentNode.insertBefore(t,s)}(window, document,'script',
+				!function (f, b, e, v, n, t, s) {
+					if (f.fbq) return;
+					n = f.fbq = function () {
+						n.callMethod ?
+							n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+					};
+					if (!f._fbq) f._fbq = n;
+					n.push = n;
+					n.loaded = !0;
+					n.version = '2.0';
+					n.queue = [];
+					t = b.createElement(e);
+					t.async = !0;
+					t.src = v;
+					s = b.getElementsByTagName(e)[0];
+					s.parentNode.insertBefore(t, s)
+				}(window, document, 'script',
 					'https://connect.facebook.net/en_US/fbevents.js');
 				fbq('init', '<?php echo esc_js( $facebook_pixel_id ); ?>');
 				fbq('track', 'PageView');
 			</script>
-			<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=<?php echo esc_js( $facebook_pixel_id ); ?>&ev=PageView&noscript=1" alt="" /></noscript>
+			<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=<?php echo esc_js( $facebook_pixel_id ); ?>&ev=PageView&noscript=1" alt=""/></noscript>
 			<!-- End Facebook Pixel Code -->
 			<?php
 		}
 
-		if ( $gtag_id && in_array( 'tracking', $gtag_code_type ) ) {
+		if ( $gtag_id && in_array( 'tracking', $gtag_code_type, true ) ) {
 			?>
 			<!-- Global site tag (gtag.js) - Google Analytics -->
 			<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $gtag_id ); ?>"></script>
 			<script>
 				window.dataLayer = window.dataLayer || [];
-				function gtag(){dataLayer.push(arguments);}
+
+				function gtag() {
+					dataLayer.push(arguments);
+				}
+
 				gtag('js', new Date());
 				gtag('config', '<?php echo esc_js( $gtag_id ); ?>');
 			</script>
@@ -409,18 +503,25 @@ class Main {
 			<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $gtag_id ); ?>"></script>
 			<script>
 				window.dataLayer = window.dataLayer || [];
-				function gtag(){dataLayer.push(arguments);}
+
+				function gtag() {
+					dataLayer.push(arguments);
+				}
+
 				gtag('js', new Date());
 				gtag('config', '<?php echo esc_js( $gtag_id ); ?>');
 			</script>
 			<?php
 		}
 
-		if ( $analytics_id && in_array( 'tracking', $analytics_code_type ) ) {
+		if ( $analytics_id && in_array( 'tracking', $analytics_code_type, true ) ) {
 			?>
 			<!-- Google Analytics -->
 			<script>
-				window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+				window.ga = window.ga || function () {
+					(ga.q = ga.q || []).push(arguments)
+				};
+				ga.l = +new Date;
 				ga('create', '<?php echo esc_js( $analytics_id ); ?>', 'auto');
 				ga('send', 'pageview');
 			</script>
@@ -446,8 +547,8 @@ class Main {
 	/**
 	 * Add new Events Tracking section to buttons/forms
 	 *
-	 * @param Element_Base $element
-	 * @param array $args
+	 * @param Element_Base $element Element_Base instance.
+	 * @param array        $args    Array of arguments.
 	 */
 	public function add_tracking_controls( $element, $args ) {
 
@@ -551,6 +652,8 @@ class Main {
 		);
 
 		/**
+		 * Add a currency control.
+		 *
 		 * @link https://support.google.com/analytics/answer/6205902
 		 */
 		$element->add_control(
@@ -708,7 +811,7 @@ class Main {
 		);
 
 		// Hidden control from Button & Form widgets.
-		if ( ! in_array( $name, [ 'form', 'button' ] ) ) {
+		if ( ! in_array( $name, [ 'form', 'button' ], true ) ) {
 			$element->add_control(
 				'events_tracker_for_elementor_gtm_css_id',
 				array(
@@ -831,26 +934,20 @@ class Main {
 	}
 
 	/**
-	 * @param Widget_Base $element
+	 * Before render hook.
+	 *
+	 * @param Widget_Base $element Widget_Base instance.
 	 */
 	public function before_render( $element ) {
 
 		$name = $element->get_name();
 
-		//foreach ( $element->get_settings_for_display( 'social_icon_list' ) as $index => $item ) {
-		//	$link_key = 'link_' . $index;
-///
-	//		$element->add_render_attribute( $link_key, 'class', 'one' );
-	//	}
-
-
-
-
 		if ( isset( $this->allowed_widgets[ $name ] ) ) {
 
 			$data = $element->get_data();
 
-			$settings     = $data['settings']; print_r($settings);
+			$settings = $data['settings'];
+
 			$attr         = array();
 			$has_tracking = false;
 
@@ -918,7 +1015,7 @@ class Main {
 				$element->add_render_attribute(
 					$this->allowed_widgets[ $name ]['element'],
 					array(
-						'data-wpl_tracker' => json_encode( $attr ),
+						'data-wpl_tracker' => wp_json_encode( $attr ),
 						'class'            => 'events-tracker-for-elementor',
 					)
 				);

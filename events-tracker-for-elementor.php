@@ -9,7 +9,7 @@
  * Plugin Name:       Events Tracker for Elementor
  * Plugin URI:        https://wordpress.org/plugins/events-tracker-for-elementor/
  * Description:       Track Click or Submit events and conversions for any Elementor widget with Google Analytics, Facebook, Yandex Metrika, Vkontakte.
- * Version:           1.2.10
+ * Version:           1.3.0
  * Author:            wpl.agency
  * Author URI:        https://wpl.agency/
  * License:           GPL-2.0+
@@ -17,13 +17,14 @@
  * Text Domain:       events-tracker-for-elementor
  * Domain Path:       /languages
  */
+
 namespace WPL\Events_Tracker_For_Elementor;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'WPL_ELEMENTOR_EVENTS_TRACKER_VERSION', '1.2.10' );
+define( 'WPL_ELEMENTOR_EVENTS_TRACKER_VERSION', '1.3.0' );
 define( 'WPL_ELEMENTOR_EVENTS_TRACKER_SLUG', 'events_tracker_for_elementor' );
 define( 'WPL_ELEMENTOR_EVENTS_TRACKER_FILE', __FILE__ );
 define( 'WPL_ELEMENTOR_EVENTS_TRACKER_DIR', trailingslashit( __DIR__ ) );
@@ -46,10 +47,6 @@ function wpl_events_tracker_for_elementor() {
 		return;
 	}
 
-	require_once __DIR__ . '/includes/class-utils.php';
-	require_once __DIR__ . '/includes/class-options.php';
-	require_once __DIR__ . '/includes/class-main.php';
-
 	$options = new Options();
 	( new Main( $options ) )->setup_hooks();
 }
@@ -71,7 +68,7 @@ function wpl_events_tracker_for_elementor_fail_load() {
 		'<strong>' . esc_html__( 'Elementor', 'events-tracker-for-elementor' ) . '</strong>'
 	);
 
-	echo '<div class="error"><p>' . $message . '</p></div>';
+	echo '<div class="error"><p>' . wp_kses_post( $message ) . '</p></div>';
 }
 
 // eol.

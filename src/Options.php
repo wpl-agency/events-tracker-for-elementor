@@ -1,21 +1,40 @@
 <?php
 /**
+ * Options class.
+ *
  * @package events-tracker-for-elementor
  */
+
 namespace WPL\Events_Tracker_For_Elementor;
 
 use Elementor\Settings;
 
+/**
+ * Options class.
+ */
 class Options {
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		$this->hooks();
 	}
 
+	/**
+	 * Init hooks.
+	 *
+	 * @return void
+	 */
 	public function hooks() {
 		add_action( 'elementor/admin/after_create_settings/elementor', [ $this, 'register_settings' ] );
 		add_action( 'admin_footer', [ $this, 'add_pro_banner' ] );
 	}
 
+	/**
+	 * Add pro banner.
+	 *
+	 * @return void
+	 */
 	public function add_pro_banner() {
 		if ( Utils::is_pro_actived() ) {
 			return;
@@ -46,7 +65,7 @@ class Options {
 			[
 				'label'    => __( 'Events Tracker', 'events-tracker-for-elementor' ),
 				'sections' => apply_filters(
-					'wpl/events-tracker-for-elementor/settings',
+					'wpl/events_tracker_for_elementor/settings',
 					[
 						WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_gtag' => [
 							'label'  => __( 'Global Site Tag', 'events-tracker-for-elementor' ),
@@ -79,15 +98,6 @@ class Options {
 										'desc' => __( 'Learn where to find <a href="https://support.google.com/google-ads/thread/1449693?hl=en" target="_blank">Google Ads Conversion ID</a>' ),
 									],
 								],
-								/*WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_adwords_code_type' => [
-									'label'      => '',
-									'field_args' => [
-										'type'    => 'checkbox_list',
-										'options' => [
-											'tracking' => __( 'Add adwords simple tracking code', 'events-tracker-for-elementor' ),
-										],
-									],
-								],*/
 							],
 						],
 						WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_analytics' => [
@@ -140,7 +150,6 @@ class Options {
 						WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_yandex_metrika' => [
 							'label'    => __( 'Yandex Metrika', 'events-tracker-for-elementor' ),
 							'callback' => function() {
-								//_e( 'See Yandex Metrika <a href="https://yandex.ru/support/metrica/quick-start.html?lang=en" target="_blank">Quick Start Guide</a>', 'events-tracker-for-elementor' );
 							},
 							'fields'   => [
 								WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_yandex_metrika_id' => [
