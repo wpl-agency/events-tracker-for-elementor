@@ -22,6 +22,7 @@ phpunit.xml
 phpunit.xml.dist
 multisite.xml
 multisite.xml.dist
+psalm.xml
 phpcs.xml
 phpcs.ruleset.xml
 phpcs.xml.dist
