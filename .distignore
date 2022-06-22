@@ -38,5 +38,4 @@ node_modules
 *.tar.gz
 *.zip
 /assets
-/src
 screenshot-*.png
