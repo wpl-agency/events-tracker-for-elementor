@@ -4,7 +4,7 @@ Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vlontakte, metrika, gtag, analytics, tracker, events
 Requires at least: 5.1
 Tested up to: 6.0
-Stable tag: 1.3.1
+Stable tag: 1.3.1.3
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
