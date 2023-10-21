@@ -55,9 +55,8 @@ class Main {
 			'element' => '_wrapper',
 		],
 		'icon-list'      => [
-			'section' => 'section_icon_list',
-			'element' => 'link_%index%',
-			'control' => 'icon_list',
+			'section' => 'section_icon',
+			'element' => '_wrapper',
 		],
 	];
 
@@ -952,14 +951,20 @@ class Main {
 			$has_tracking = false;
 
 			// Vkontakte.
-			if ( isset( $settings['events_tracker_for_elementor_vkontakte'] ) ) {
+			if (
+				isset( $settings['events_tracker_for_elementor_vkontakte'] ) &&
+				! empty( $settings['events_tracker_for_elementor_vkontakte_event_name'] )
+			) {
 				$has_tracking                 = true;
 				$attr['vkontakte']            = true;
 				$attr['vkontakte_event_name'] = $settings['events_tracker_for_elementor_vkontakte_event_name'];
 			}
 
 			// Yandex Metrika.
-			if ( isset( $settings['events_tracker_for_elementor_yandex_metrika'] ) ) {
+			if (
+				isset( $settings['events_tracker_for_elementor_yandex_metrika'] ) &&
+				! empty( $settings['events_tracker_for_elementor_yandex_metrika_event_name'] )
+			) {
 				$has_tracking                      = true;
 				$attr['yandex_metrika']            = true;
 				$attr['yandex_metrika_event_name'] = $settings['events_tracker_for_elementor_yandex_metrika_event_name'];
@@ -967,7 +972,10 @@ class Main {
 			}
 
 			// Facebook.
-			if ( isset( $settings['events_tracker_for_elementor_facebook'] ) ) {
+			if (
+				isset( $settings['events_tracker_for_elementor_facebook'] ) &&
+				! empty( $settings['events_tracker_for_elementor_facebook_event_name'] )
+			) {
 				$has_tracking                = true;
 				$attr['facebook']            = true;
 				$attr['facebook_event_name'] = $settings['events_tracker_for_elementor_facebook_event_name'];
@@ -978,7 +986,12 @@ class Main {
 			}
 
 			// Google Analytics.
-			if ( isset( $settings['events_tracker_for_elementor_analytics'] ) ) {
+			if (
+				isset( $settings['events_tracker_for_elementor_analytics'] ) &&
+				! empty( $settings['events_tracker_for_elementor_analytics_category'] ) &&
+				! empty( $settings['events_tracker_for_elementor_analytics_action'] ) &&
+				! empty( $settings['events_tracker_for_elementor_analytics_label'] )
+			) {
 				$has_tracking               = true;
 				$attr['analytics']          = true;
 				$attr['analytics_category'] = $settings['events_tracker_for_elementor_analytics_category'];
@@ -987,7 +1000,12 @@ class Main {
 			}
 
 			// Google Global Tag (gtag).
-			if ( isset( $settings['events_tracker_for_elementor_gtag'] ) ) {
+			if (
+				isset( $settings['events_tracker_for_elementor_gtag'] ) &&
+				! empty( $settings['events_tracker_for_elementor_gtag_category'] ) &&
+				! empty( $settings['events_tracker_for_elementor_gtag_action'] ) &&
+				! empty( $settings['events_tracker_for_elementor_gtag_label'] )
+			) {
 				$has_tracking          = true;
 				$attr['gtag']          = true;
 				$attr['gtag_category'] = $settings['events_tracker_for_elementor_gtag_category'];
@@ -1002,7 +1020,12 @@ class Main {
 			}
 
 			// Google Adwords Conversion (gtag).
-			if ( isset( $settings['events_tracker_for_elementor_adwords'] ) ) {
+			if (
+				isset( $settings['events_tracker_for_elementor_adwords'] ) &&
+				! empty( $settings['events_tracker_for_elementor_adwords_label'] ) &&
+				! empty( $settings['events_tracker_for_elementor_adwords_currency'] ) &&
+				! empty( $settings['events_tracker_for_elementor_adwords_value'] )
+			) {
 				$has_tracking             = true;
 				$attr['adwords']          = true;
 				$attr['adwords_label']    = $settings['events_tracker_for_elementor_adwords_label'];
