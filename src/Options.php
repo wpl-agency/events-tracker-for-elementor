@@ -74,7 +74,7 @@ class Options {
 									'label'      => __( 'Global Site Tag ID (gtag.js)', 'events-tracker-for-elementor' ),
 									'field_args' => [
 										'type' => 'text',
-										'desc' => __( 'Learn <a href="https://support.google.com/analytics/answer/1008080?hl=en" target="_blank">how to set up the Analytics tag</a> and where to get the code' ),
+										'desc' => __( 'Learn <a href="https://support.google.com/analytics/answer/1008080?hl=en" target="_blank">how to set up the Analytics tag</a> and where to get the code', 'events-tracker-for-elementor' ),
 									],
 								],
 								WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_gtag_code_type' => [
@@ -95,7 +95,7 @@ class Options {
 									'label'      => __( 'Adwords Converion ID (gtag.js)', 'events-tracker-for-elementor' ),
 									'field_args' => [
 										'type' => 'text',
-										'desc' => __( 'Learn where to find <a href="https://support.google.com/google-ads/thread/1449693?hl=en" target="_blank">Google Ads Conversion ID</a>' ),
+										'desc' => __( 'Learn where to find <a href="https://support.google.com/google-ads/thread/1449693?hl=en" target="_blank">Google Ads Conversion ID</a>', 'events-tracker-for-elementor' ),
 									],
 								],
 							],
@@ -107,7 +107,7 @@ class Options {
 									'label'      => __( 'Google Analytics ID (analytics.js)', 'events-tracker-for-elementor' ),
 									'field_args' => [
 										'type' => 'text',
-										'desc' => __( 'Know how to add <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs" target="_blank">Analytics.js code</a> and <a href="https://support.google.com/analytics/answer/1008080?hl=en" target="_blank">where to get</a> the tracking code' ),
+										'desc' => __( 'Know how to add <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs" target="_blank">Analytics.js code</a> and <a href="https://support.google.com/analytics/answer/1008080?hl=en" target="_blank">where to get</a> the tracking code', 'events-tracker-for-elementor' ),
 									],
 								],
 								WPL_ELEMENTOR_EVENTS_TRACKER_SLUG . '_analytics_code_type' => [
@@ -129,7 +129,7 @@ class Options {
 									'label'      => __( 'GTM ID', 'events-tracker-for-elementor' ),
 									'field_args' => [
 										'type' => 'text',
-										'desc' => __( 'See Google Tag Manager <a href="https://developers.google.com/tag-manager/quickstart" target="_blank">Quick Start Guide</a>' ),
+										'desc' => __( 'See Google Tag Manager <a href="https://developers.google.com/tag-manager/quickstart" target="_blank">Quick Start Guide</a>', 'events-tracker-for-elementor' ),
 									],
 								],
 							],
@@ -142,7 +142,7 @@ class Options {
 									'label'      => __( 'Facebook Pixel ID', 'events-tracker-for-elementor' ),
 									'field_args' => [
 										'type' => 'text',
-										'desc' => __( 'Know how to create a <a href="https://www.facebook.com/business/help/952192354843755?id=1205376682832142" target="_blank">Facebook Pixel</a> and get a code.' ),
+										'desc' => __( 'Know how to create a <a href="https://www.facebook.com/business/help/952192354843755?id=1205376682832142" target="_blank">Facebook Pixel</a> and get a code.', 'events-tracker-for-elementor' ),
 									],
 								],
 							],
@@ -178,7 +178,7 @@ class Options {
 									'label'      => __( 'Vkontakte Pixel ID', 'events-tracker-for-elementor' ),
 									'field_args' => [
 										'type' => 'text',
-										'desc' => __( 'See <a href="https://vk.com/faq12142" target="_blank">VK FAQ</a> to create pixel and get code' ),
+										'desc' => __( 'See <a href="https://vk.com/faq12142" target="_blank">VK FAQ</a> to create pixel and get code', 'events-tracker-for-elementor' ),
 									],
 								],
 							],

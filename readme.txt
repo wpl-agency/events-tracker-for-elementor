@@ -4,7 +4,7 @@ Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vkontakte, metrika, gtag, analytics, tracker, events
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -62,6 +62,55 @@ Events Tracker for Elementor has built in integration with all analytics/ads sys
 - Facebook pixel
 - Yandex Metrika tracking code. Webvisor, scroll map and forms analytics are also supports
 - Vkontakte pixel
+
+### External services
+
+This plugin uses external services, which are documented below with links to the service’s Privacy Policy and License agreement. These services are integral to the functionality and features offered by the plugin. However, we acknowledge the importance of transparency regarding the use of such services.
+
+#### Google Tag Manager
+
+To work with the plugin, you need to register in the GTM service,
+which will allow you to analyze the received statistics.
+For more information, please click on the links below.
+
+Service Link: https://tagmanager.google.com/
+Service Privacy Policy: https://policies.google.com/privacy
+
+#### Google Analytics
+
+To work with the plugin, you need to register in the Google Analytics service,
+which will allow you to analyze the received statistics.
+For more information, please click on the links below.
+
+Service Link: https://marketingplatform.google.com/about/analytics/
+Service Privacy Policy: https://www.google.com/intl/en/policies/privacy/
+
+#### VK.com
+
+To work with the plugin, you need to register in the VK.com service,
+which will allow you to analyze the received statistics.
+For more information, please click on the links below.
+
+Service Link: https://ads.vk.com
+Service Privacy Policy: https://ads.vk.com/documents
+
+#### Yandex Metrika
+
+To work with the plugin, you need to register in the metrika.yandex.ru service,
+which will allow you to analyze the received statistics.
+For more information, please click on the links below.
+
+Service Link: https://metrika.yandex.ru/
+Service Privacy https://yandex.ru/legal/confidential/
+
+#### Facebook
+
+To work with the plugin, you need to register in the FB.com service,
+which will allow you to analyze the received statistics.
+For more information, please click on the links below.
+
+Service Link: https://www.facebook.com/business/tools/meta-pixel
+Service Privacy https://www.facebook.com/policies_center/
 
 ### ⛑️ Documentation and support
 
@@ -128,6 +177,9 @@ Add class `events-tracker-for-elementor-exclude` for forms or links
 6. Tracking codes and pixels insertion
 
 == Changelog ==
+
+= 1.3.4 (03.11.2024) =
+* Tested with WordPress 6.6.2
 
 = 1.3.3 (09.09.2024) =
 * Tested with WordPress 6.6.1

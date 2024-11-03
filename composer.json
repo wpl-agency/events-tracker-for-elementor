@@ -18,6 +18,9 @@
   "config": {
     "platform": {
       "php": "7.4"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "require": {
@@ -26,12 +29,12 @@
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
-    "squizlabs/php_codesniffer": "^3.6",
+    "squizlabs/php_codesniffer": "^3.10",
     "phpcompatibility/php-compatibility": "^9.3",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
-    "wp-coding-standards/wpcs": "^2.3",
-    "vimeo/psalm": "^4.20",
-    "humanmade/psalm-plugin-wordpress": "^2.0"
+    "wp-coding-standards/wpcs": "^3.1",
+    "vimeo/psalm": "^5.26",
+    "humanmade/psalm-plugin-wordpress": "^3.1"
   },
   "scripts": {
     "phpcs": "phpcs --standard=./phpcs.xml",

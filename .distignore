@@ -13,7 +13,6 @@
 Thumbs.db
 behat.yml
 circle.yml
-composer.json
 composer.lock
 Gruntfile.js
 package.json
