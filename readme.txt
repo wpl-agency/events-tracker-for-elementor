@@ -1,10 +1,10 @@
 === Events Tracker for Elementor ===
-Contributors: wplagency, mihdan, donatory
+Contributors: mihdan
 Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vkontakte, metrika, gtag, analytics, tracker, events
-Requires at least: 6.0
-Tested up to: 6.6
-Stable tag: 1.3.4
+Requires at least: 6.3
+Tested up to: 6.8
+Stable tag: 1.3.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -177,6 +177,11 @@ Add class `events-tracker-for-elementor-exclude` for forms or links
 6. Tracking codes and pixels insertion
 
 == Changelog ==
+
+= 1.3.5 (18.04.2025) =
+* Tested with WordPress 6.8
+* Tested with Elementor 3.28.3
+* Tested with Elementor Pro 3.28.3
 
 = 1.3.4 (03.11.2024) =
 * Tested with WordPress 6.6.2
