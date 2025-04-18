@@ -235,28 +235,28 @@ class Main {
 			'кцукцукцу'   =>
 				[
 					'name'  => 'events_tracker_for_elementor_vkontaktee',
-					'label' => __( 'Events Tracking', 'masked-input-for-elementor' ),
+					'label' => __( 'Events Tracking', 'events-tracker-for-elementor' ),
 					'type'  => Controls_Manager::HEADING,
 					'tab'   => 'events',
 				],
 			'masked'      =>
 				[
 					'name'  => 'events_tracker_for_elementor_vkontakte',
-					'label' => __( 'VK', 'masked-input-for-elementor' ),
+					'label' => __( 'VK', 'events-tracker-for-elementor' ),
 					'type'  => Controls_Manager::SWITCHER,
 					'tab'   => 'events',
 				],
 			'maskeed'     =>
 				[
 					'name'  => 'events_tracker_for_elementor_vkontakteeeee',
-					'label' => __( 'Yandex', 'masked-input-for-elementor' ),
+					'label' => __( 'Yandex', 'events-tracker-for-elementor' ),
 					'type'  => Controls_Manager::SWITCHER,
 					'tab'   => 'events',
 				],
 			'masked_type' =>
 				[
 					'name'       => 'events_tracker_for_elementor_vkontakte_event_name',
-					'label'      => __( 'Event Name', 'masked-input-for-elementor' ),
+					'label'      => __( 'Event Name', 'events-tracker-for-elementor' ),
 					'type'       => Controls_Manager::TEXT,
 					'default'    => '',
 					'conditions' => [

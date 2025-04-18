@@ -4,7 +4,7 @@ Donate link: https://www.kobzarev.com/donate/
 Tags: elementor, seo, links, vkontakte, metrika, gtag, analytics, tracker, events
 Requires at least: 6.3
 Tested up to: 6.8
-Stable tag: 1.3.5
+Stable tag: 1.3.5.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -83,6 +83,7 @@ which will allow you to analyze the received statistics.
 For more information, please click on the links below.
 
 Service Link: https://marketingplatform.google.com/about/analytics/
+Service Link: https://www.google-analytics.com/
 Service Privacy Policy: https://www.google.com/intl/en/policies/privacy/
 
 #### VK.com
@@ -91,7 +92,8 @@ To work with the plugin, you need to register in the VK.com service,
 which will allow you to analyze the received statistics.
 For more information, please click on the links below.
 
-Service Link: https://ads.vk.com
+Service Link: https://ads.vk.com/
+Service Link: https://vk.com/
 Service Privacy Policy: https://ads.vk.com/documents
 
 #### Yandex Metrika
@@ -101,6 +103,7 @@ which will allow you to analyze the received statistics.
 For more information, please click on the links below.
 
 Service Link: https://metrika.yandex.ru/
+Service Link: https://cdn.jsdelivr.net/
 Service Privacy https://yandex.ru/legal/confidential/
 
 #### Facebook
